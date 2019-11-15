@@ -1,0 +1,212 @@
+/* ---------------------------------------- css base 基础部分---------------------------------------- */
+* {margin:0;padding:0; border:0; word-break:break-word; font-family:'Microsoft YaHei',arial; background-position: 50% 50%; background-repeat: no-repeat; background-size:100% 100%; -webkit-mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; -webkit-tap-highlight-color: rgba(0,0,0,0); font-size: 24px; line-height: 1; box-sizing: border-box; position: relative; }
+html,body{ width:100%; height:100%; overflow: hidden;}
+table{border-collapse:collapse;border-spacing:0;}
+th,tr,td,h1,h2,h3,h4,h5,h6,i,b,em{font-style:normal;font-weight:normal;}
+ol,ul,li {list-style-type:none; display:block;}
+select,input,img{vertical-align:middle;border:none;outline:none;}
+textarea {resize: none;} /*webkit核心中textare取消拖动调整大小*/
+textarea:focus {outline: none;} /*textarea聚焦时默认边框颜色不变*/
+select,input[type=text],input[type=tel],input[type=password],input[type=number],textarea{ -webkit-appearance:none; border:none; border-radius:0; background-color:transparent; font-family: arial;}
+input::-webkit-input-placeholder,input:focus::-webkit-input-placeholder{color:#888;}/* input 标签placeholder文字的颜色*/
+video{ background-color:#000;}
+a{ text-decoration:none; display:inline-block;}
+sup,sub{ font-size: 60%;}
+.clearFix {display: block;}
+.clearFix:after {clear: both;content: ".";display: block;height: 0;visibility: hidden;}
+.noPointer{pointer-events:none;}/* 禁止触摸互动事件 */
+.noCallout{-webkit-touch-callout: none;}/* 禁止ios 长按时不触发系统的菜单，禁止ios&android长按时下载图片 */
+.noSelect{-webkit-user-select:none;}/* 禁止ios和android用户选中文字 */
+.gpuOpen{will-change:transform,opacity;}
+.gpuClose{will-change:auto;}
+.txtOutline{text-shadow: 1px 0 0 #000,-1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000; }
+.txtOverflow{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+
+
+/* ---------------------------------------- css common 公共部分 ---------------------------------------- */
+
+/* 竖屏锁定提示浮层 */
+aside.turnBoxLandscape{ position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,1); z-index:10999; display: none;}
+aside.turnBoxLandscape>div.lock{ margin: 50px auto 0; width: 50px; height: 50px; background-color: #fff; border-radius: 15px; position: relative; animation: turnLock 3.2s linear infinite both;}
+aside.turnBoxLandscape>div.lock span{position: absolute; left: 10px; top: 10px; width: 30px; height: 30px;}
+aside.turnBoxLandscape>div.lock span:nth-child(1){ background-image: url(../images/common/turn_unlock.png); animation: turnLock1 3.2s linear infinite both;}
+aside.turnBoxLandscape>div.lock span:nth-child(2){ background-image: url(../images/common/turn_lock.png); animation: turnLock2 3.2s linear infinite both;}
+aside.turnBoxLandscape>div.sign{ margin-top: 10px; width: 100%; height: 16px; position: relative;}
+aside.turnBoxLandscape>div.sign span{ position: absolute; left: 0; top: 0; width: 100%; text-align: center; font-size:16px; color: #fff;}
+aside.turnBoxLandscape>div.sign span:nth-child(1){ animation: turnSign1 3.2s linear infinite both;}
+aside.turnBoxLandscape>div.sign span:nth-child(2){ animation: turnSign2 3.2s linear infinite both;}
+aside.turnBoxLandscape>div.phone{ width: 60px; height: 120px; margin:-10px auto 0; position: relative; transform: rotate(-90deg);}
+aside.turnBoxLandscape>div.phone img{ width: 100%; height: 100%;}
+aside.turnBoxLandscape>div.phone i{ position: absolute; left: 50%; top: 48px; width: 30px; margin-left: -15px; height: 22.5px;}
+aside.turnBoxLandscape>div.phone i.yes{ background-image: url(../images/common/turn_yes.png); opacity: 0; animation: turnYes 3.2s linear infinite both;}
+aside.turnBoxLandscape>div.phone i.no{ background-image: url(../images/common/turn_no.png); opacity: 0; animation: turnNo 3.2s linear infinite both;}
+aside.turnBoxLandscape>p{ text-align:center; font-size:24px; color:rgba(255,255,255,0.65); margin-top: 10px;}
+
+@-webkit-keyframes turnLock{
+	0%{ transform: scale(1);}
+	40%{ transform: scale(1);}
+	45%{ transform: scale(1.2);}
+	50%{ transform: scale(1);}
+	90%{ transform: scale(1);}
+	95%{ transform: scale(1.2);}
+	100%{ transform: scale(1);}
+}
+
+
+@-webkit-keyframes turnLock1{
+	0%{ transform: rotate(0); opacity: 1;}
+	40%{ transform: rotate(0);  opacity: 1;}
+	45%{ transform: rotate(0); opacity: 0.5;}
+	50%{ transform: rotate(0); opacity: 0;}
+	90%{ transform: rotate(0); opacity: 0;}
+	100%{ transform: rotate(360deg); opacity: 1;}
+}
+
+@-webkit-keyframes turnLock2{
+	0%{ transform: rotate(0); opacity: 0;}
+	40%{ transform: rotate(0); opacity: 0;}
+	45%{ transform: rotate(0); opacity: 0.5;}
+	50%{ transform: rotate(0); opacity: 1;}
+	53%{ transform: rotate(-8deg); opacity: 1;}
+	56%{ transform: rotate(6deg); opacity: 1;}
+	59%{ transform: rotate(-4deg); opacity: 1;}
+	62%{ transform: rotate(4deg); opacity: 1;}
+	65%{ transform: rotate(0); opacity: 1;}
+	90%{ transform: rotate(0); opacity: 1;}
+	100%{ transform: rotate(360deg); opacity: 0;}
+}
+
+@-webkit-keyframes turnSign1{
+	0%{ opacity: 1;}
+	45%{ opacity: 1;}
+	50%{ opacity: 0;}
+	90%{ opacity: 0;}
+	95%{ opacity: 1;}
+	100%{ opacity: 1;}
+}
+
+@-webkit-keyframes turnSign2{
+	0%{  opacity: 0;}
+	45%{ opacity: 0;}
+	50%{ opacity: 1;}
+	90%{ opacity: 1;}
+	95%{ opacity: 0;}
+	100%{ opacity: 0;}
+}
+
+@-webkit-keyframes turnYes{
+	0%{ transform: scale(0) rotate(90deg); opacity: 0;}
+	50%{ transform: scale(0) rotate(90deg); opacity: 0;}
+	54%{ transform: scale(1.15) rotate(90deg); opacity: 1;}
+	58%{ transform: scale(0.85) rotate(90deg); opacity: 1;}
+	62%{ transform: scale(1) rotate(90deg); opacity: 1;}
+	80%{ transform: scale(1) rotate(90deg); opacity: 1;}
+	85%{ transform: scale(0) rotate(90deg); opacity: 0;}
+	100%{ transform: scale(0) rotate(90deg); opacity: 0;}
+}
+
+@-webkit-keyframes turnNo{
+	0%{ transform: scale(0); opacity: 0;}
+	4%{ transform: scale(1.15); opacity: 1;}
+	8%{ transform: scale(0.85); opacity: 1;}
+	12%{ transform: scale(1); opacity: 1;}
+	30%{ transform: scale(1); opacity: 1;}
+	35%{ transform: scale(0); opacity: 0;}
+	100%{ transform: scale(0); opacity: 0;}
+}
+
+/* load浮层 */
+aside.loadBox{ position:absolute; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:996; display: none;}
+aside.loadBox>span{ display:block; position:absolute; left:50%; top:50%; margin-left:-10px; margin-top:-20px; -webkit-transform:scale(0.4); -webkit-transform-origin: 50% 50%;}
+aside.loadBox>span i{ display:block; position:absolute; left:0; top:0; width:40px; height:10px; border-radius:8px; background:rgba(255,255,255,0.5); box-shadow:0 0 10px rgba(255,255,255,1);}
+aside.loadBox>span i:nth-child(1){ -webkit-transform:translate(60px, 0) rotate(0deg); -webkit-animation:loadCircle 2.4s 0s linear infinite;}
+aside.loadBox>span i:nth-child(2){ -webkit-transform:translate(51.96px, 30px) rotate(30deg); -webkit-animation:loadCircle 2.4s 0.2s linear infinite;}
+aside.loadBox>span i:nth-child(3){ -webkit-transform:translate(30px, 51.96px) rotate(60deg); -webkit-animation:loadCircle 2.4s 0.4s linear infinite;}
+aside.loadBox>span i:nth-child(4){ -webkit-transform:translate(0, 60px) rotate(90deg); -webkit-animation:loadCircle 2.4s 0.6s linear infinite;}
+aside.loadBox>span i:nth-child(5){ -webkit-transform:translate(-30px, 51.96px) rotate(120deg); -webkit-animation:loadCircle 2.4s 0.8s linear infinite;}
+aside.loadBox>span i:nth-child(6){ -webkit-transform:translate(-51.96px, 30px) rotate(150deg); -webkit-animation:loadCircle 2.4s 1.0s linear infinite;}
+aside.loadBox>span i:nth-child(7){ -webkit-transform:translate(-60px, 0) rotate(180deg); -webkit-animation:loadCircle 2.4s 1.2s linear infinite;}
+aside.loadBox>span i:nth-child(8){ -webkit-transform:translate(-51.96px, -30px) rotate(210deg); -webkit-animation:loadCircle 2.4s 1.4s linear infinite;}
+aside.loadBox>span i:nth-child(9){ -webkit-transform:translate(-30px, -51.96px) rotate(240deg); -webkit-animation:loadCircle 2.4s 1.6s linear infinite;}
+aside.loadBox>span i:nth-child(10){ -webkit-transform:translate(0, -60px) rotate(270deg); -webkit-animation:loadCircle 2.4s 1.8s linear infinite;}
+aside.loadBox>span i:nth-child(11){ -webkit-transform:translate(30px, -51.96px) rotate(300deg); -webkit-animation:loadCircle 2.4s 2.0s linear infinite;}
+aside.loadBox>span i:nth-child(12){ -webkit-transform:translate(51.96px, -30px) rotate(330deg); -webkit-animation:loadCircle 2.4s 2.2s linear infinite;}
+aside.loadBox>b{ display:block; position:absolute; left:0; top:50%; width:100%; height:40px; line-height:40px; margin-left:-10px; margin-top:-34px; text-align:center; font-size:20px; color:rgba(255,255,255,0.7);}
+@-webkit-keyframes loadCircle{0%{opacity:1}8.3%{opacity:0}50%{opacity:1}100%{opacity:1}}
+
+
+/* 取代系统alert的警告提示弹窗 */
+aside.alertBox{ position:absolute; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:998;}
+aside.alertBox>div{ position: absolute; left: 50%; top: 50%; width:60%; -webkit-transform: translate(-50%,-50%); transform: translate(-50%,-50%); background-color:#FAFAFC;  border-radius:6px; padding-top: 40px; text-align:center; }
+aside.alertBox>div>p.text{font-size:30px; line-height: 40px; color:#888; padding: 0 40px;}
+aside.alertBox>div>p.btn{ display: flex; border-top: 1px solid #D5D5D6; margin-top: 40px; position: relative; }
+aside.alertBox>div>p.btn a{ -webkit-flex: 1; flex:1; text-align: center; color:#0BB20C; font-size:34px; line-height: 84px;}
+aside.alertBox>div>p.btn a:active{ background-color: #eeeeee;}
+
+/* 视频 */
+aside.videoBox{position:absolute; left:0; top:0; width:100%; height:100%; background:#000; z-index:996; display:none;}
+aside.videoBox>iframe,aside.videoBox>video{position:absolute; left:0; top: 0; object-fit: fill;}
+aside.videoBox>a.close{ position:absolute; right:40px; top:40px; width:60px; height:60px; background-image: url(../images/common/close_video.png);}
+
+/* 照片文件选择框*/
+#fileBox{ position:absolute; left:0; top:0; width:1px; height:1px; overflow:hidden; visibility: hidden;}
+
+/* 电子罗盘数据面板 */
+#compassPanel{ position:absolute; right:0; top:0; width:40%; background:rgba(0,0,0,0.5); z-index: 99; display:none;}
+#compassPanel h3{color:#fff; background:rgba(255,255,255,0.2); padding:10px 20px; margin-bottom:10px; font-size: 24px;}
+#compassPanel p{ color:#fff; font-size:22px; margin-bottom:10px; margin-left:20px;}
+
+/* 分享浮层 */
+aside.shareBox{position:absolute; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:997; display:none;}
+aside.shareBox>img{ width:100%;}
+
+/* 背景音乐按钮 */
+a.bgmBtn{ position: absolute; right:30px; top: 30px; width: 60px; height: 60px;}
+a.bgmPlay{ background-image: url(../images/common/bgm_on.png);}
+a.bgmStop{ background-image: url(../images/common/bgm_off.png);}
+
+/* fps */
+#fpsShow{position: absolute; left: 10px; top: 10px; width: 90px; height: 36px; font-size: 24px; background-color: black; display: flex; justify-content: center; align-items: center; pointer-events: none;}
+.fpsFast{ color: greenyellow;}
+.fpsNormal{ color: yellow;}
+.fpsSlow{ color: red;}
+
+/* 容器 */
+body{background-color:#000}
+article{background-color:#fff;width:100%;height:100%;overflow-x:hidden;transform-origin:0 0;}
+section{position:absolute;left:0;top:0;width:100%;height:100%;}
+aside{position:absolute;left:0;top:0;width:100%;height:100%;}
+
+/*---------------------------------------- 15:9 android 微信 && 16:9 浏览器----------------------*/
+@media screen and (device-width:360px) and (max-height:540px), screen and (device-width:412px) and (max-height:630px), screen and (device-width:320px) and (max-height:470px), screen and (device-width:375px) and (max-height:560px), screen and (device-width:412px) and (max-height:630px){
+a.bgmBtn{ right: 70px;}
+}
+
+/*---------------------------------------- iphone6plus ----------------------------------------------*/
+@media screen and (device-width:414px){
+aside.turnBoxLandscape>div.lock{ margin: 80px auto 0;}
+a.bgmBtn{ top: 40px;}
+}
+
+/*---------------------------------------- iphoneX 微信----------------------*/
+@media screen and (device-width:375px) and (min-height:720px){
+a.bgmBtn{  top: 70px;}
+}
+
+/*---------------------------------------- iphone ----------------------------------------------*/
+@media screen and (device-width:320px), screen and (device-width:375px), screen and (device-width:414px){
+}
+
+/*-------------------------------------------------------- 针对真横屏 --------------------------------------------------------------------------------------*/
+/*----------------------------------------15：9----------------------*/
+@media screen and (orientation : landscape) and (min-width:598px){ 
+}
+
+/*----------------------------------------16：9----------------------*/
+@media screen and (orientation : landscape) and (min-width:640px){ 
+a.bgmBtn{ top: 115px;}
+}
+
+/*----------------------------------------18:9----------------------*/
+@media screen and (orientation : landscape) and (min-width:720px){ 
+}
