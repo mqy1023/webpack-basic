@@ -3,9 +3,16 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const APP = require('../app.js');
 const path = require('path')
+let hash;
+// hash配置
+if (!APP.hash) {
+  APP.hash = '-[contenthash:4]'
+}else if(APP.hash == 'none'){
+  APP.hash = ''
+}
 let webpackConfig = {
   entry: {},
-  output: { filename: 'js/[name].[contenthash:4].js' },
+  output: { filename: `js/[name]${APP.hash}.js` },
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
@@ -29,7 +36,7 @@ let webpackConfig = {
               // 打包输出目录
               outputPath: APP.image.outputPath || 'images',
               // 打包输出图片名称
-              name: '[name]-[hash:4].[ext]',
+              name: `[name]${APP.hash}.[ext]`,
               // 文件路径
               publicPath: APP.image.publicPath || ''
             }
