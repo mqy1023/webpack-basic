@@ -1,4 +1,4 @@
-import './css/common.css'
+import '@/css/common.css'
 import 'base.js'
 import 'jquery'
 var articleBox = $('article');

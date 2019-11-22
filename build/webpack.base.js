@@ -3,53 +3,22 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const projectConfig = require('../project.config');
-let WebpackPlugin = [
-  new MiniCssExtractPlugin({
-    filename: 'css/[name].css',
-    chunkFilename: 'css/[id].css'
-  })
-]
-if (typeof projectConfig === 'object') {
-  if (typeof projectConfig.pages === 'object') {
-    let pages = projectConfig.pages
-    for (const key in pages) {
-      if (pages.hasOwnProperty(key)) {
-        const element = pages[key];
-        WebpackPlugin.unshift(new htmlWebpackPlugin({
-          chunksSortMode: 'dependency',
-          ...element,
-          filename: (element.template.match(/([^/?#]+)$/i) || ['', ''])[1],
-        }))
-      }
-    }
-  }
-}
-if (process.env.npm_lifecycle_event !== 'server') {
-  WebpackPlugin.push(new CleanWebpackPlugin({}))
-} else {
-
-}
-module.exports = {
-  optimization: {
-    minimizer: [
-      new TerserJSPlugin({}),
-      new OptimizeCSSAssetsPlugin({}),
-    ]
-  },
-  entry: {
-    index: './src/index.js',
-    screen: './src/screen.js'
-  },
-  output: {
-    filename: 'js/[name].[contenthash:4].js',
-  },
-  plugins: WebpackPlugin,
+const projectConfig = require('../app.js');
+const path = require('path')
+let webpackConfig = {
+  entry: {},
+  output: { filename: 'js/[name].[contenthash:4].js' },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css',
+      chunkFilename: 'css/[id].css'
+    })
+  ],
   resolve: {
     modules: ['../src/js/base', 'node_modules'],
+    alias: { '@': path.resolve(__dirname, '../src') }
   },
   module: {
-    noParse: /jquery|pxloader|jquery.transit/,
     rules: [
       {
         test: require.resolve('pxloader'),
@@ -62,10 +31,11 @@ module.exports = {
         test: require.resolve('jquery'),
         use: [{
           loader: 'expose-loader',
-          options: 'jQuery'
-        }, {
+          options: 'jquery',
+        },
+        {
           loader: 'expose-loader',
-          options: '$'
+          options: '$',
         }]
       },
       {
@@ -117,5 +87,26 @@ module.exports = {
         loader: 'html-withimg-loader'
       }
     ]
+  },
+  optimization: {
+    minimizer: [
+      new TerserJSPlugin({}),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
+    splitChunks: { chunks: "all" }
   }
 }
+if (typeof projectConfig === 'object' && typeof projectConfig.pages === 'object') {
+  projectConfig.pages.map(page => {
+    webpackConfig.entry[page.name] = `./src/${page.entry}`;
+    webpackConfig.plugins.push(new htmlWebpackPlugin({
+      template: './src/' + page.html,
+      filename: page.name + '.html',
+      chunks: [page.name]
+    }))
+  })
+}
+if (process.env.npm_lifecycle_event !== 'server') {
+  webpackConfig.plugins.push(new CleanWebpackPlugin({}))
+}
+module.exports = webpackConfig

@@ -176,37 +176,3 @@ body{background-color:#000}
 article{background-color:#fff;width:100%;height:100%;overflow-x:hidden;transform-origin:0 0;}
 section{position:absolute;left:0;top:0;width:100%;height:100%;}
 aside{position:absolute;left:0;top:0;width:100%;height:100%;}
-
-/*---------------------------------------- 15:9 android 微信 && 16:9 浏览器----------------------*/
-@media screen and (device-width:360px) and (max-height:540px), screen and (device-width:412px) and (max-height:630px), screen and (device-width:320px) and (max-height:470px), screen and (device-width:375px) and (max-height:560px), screen and (device-width:412px) and (max-height:630px){
-a.bgmBtn{ right: 70px;}
-}
-
-/*---------------------------------------- iphone6plus ----------------------------------------------*/
-@media screen and (device-width:414px){
-aside.turnBoxLandscape>div.lock{ margin: 80px auto 0;}
-a.bgmBtn{ top: 40px;}
-}
-
-/*---------------------------------------- iphoneX 微信----------------------*/
-@media screen and (device-width:375px) and (min-height:720px){
-a.bgmBtn{  top: 70px;}
-}
-
-/*---------------------------------------- iphone ----------------------------------------------*/
-@media screen and (device-width:320px), screen and (device-width:375px), screen and (device-width:414px){
-}
-
-/*-------------------------------------------------------- 针对真横屏 --------------------------------------------------------------------------------------*/
-/*----------------------------------------15：9----------------------*/
-@media screen and (orientation : landscape) and (min-width:598px){ 
-}
-
-/*----------------------------------------16：9----------------------*/
-@media screen and (orientation : landscape) and (min-width:640px){ 
-a.bgmBtn{ top: 115px;}
-}
-
-/*----------------------------------------18:9----------------------*/
-@media screen and (orientation : landscape) and (min-width:720px){ 
-}

@@ -1,3 +1,16 @@
+// 默认模板
+import 'jquery'
+import 'jquery.transit'
+import 'pxloader'
+import 'pxloader/PxLoaderImage'
+import 'base.js'
+import 'com.js'
+import 'audio.js'
+import 'math.js'
+import 'monitor.js'
+import '@/css/common.landscape.css'
+import './index.landscape.scss'
+ibase.init({dir:'landscape',lock:true});
 $(document).ready(function(){
 	
 	//-----------------------------------------定义和初始化变量----------------------------------------
@@ -47,7 +60,7 @@ $(document).ready(function(){
 		
 		function load_handler() {
 	        var loader = new PxLoader();
-	        loader.addImage(require('../images/common/turn_phone.png'));
+	        loader.addImage(require('@/images/common/turn_phone.png'));
 	
 	        //实际加载进度
 			loader.addProgressListener(function(e) {
