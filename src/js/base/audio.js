@@ -1,6 +1,4 @@
 //2018.9.25
-var iaudio=importAudio();
-
 function importAudio(){
 	var audio={};
 	var webAudioContext=window.webkitAudioContext||window.AudioContext;
@@ -446,8 +444,6 @@ function importAudio(){
 	return audio;
 }//end import
 
-var ibgm=importBgm();
-
 function importBgm(){
 	var bgm={};
 	var defaults = {webAudio:0,src:'',autoplay:1};
@@ -464,9 +460,9 @@ function importBgm(){
 	
 	bgm.href=function(url){
 		if(url && url!=''){
-			sessionStorage.bgmPlay=ibgm.audio.bgmPlay;
-			var bgmTime=opts.webAudio?ibgm.audio.currentTime+ibgm.audio.context.currentTime-ibgm.audio.startTime:ibgm.audio.audio.currentTime;
-			sessionStorage.bgmTime=ibgm.audio.bgmPlay?bgmTime:ibgm.audio.currentTime;
+			sessionStorage.bgmPlay=bgm.audio.bgmPlay;
+			var bgmTime=opts.webAudio?bgm.audio.currentTime+bgm.audio.context.currentTime-bgm.audio.startTime:bgm.audio.audio.currentTime;
+			sessionStorage.bgmTime=bgm.audio.bgmPlay?bgmTime:bgm.audio.currentTime;
 			location.href=url;
 		}//edn func
 	}//edn func
@@ -512,9 +508,5 @@ function importBgm(){
 	return bgm;
 	
 }//edn func
-(function (global, factory) {
-	factory(global);
-})(typeof window !== "undefined" ? window : this, function (global) {
-	global.iaudio = importAudio();
-	global.ibgm = importBgm();
-})
+export const iaudio = importAudio();
+export const ibgm = importBgm();

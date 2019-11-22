@@ -1,4 +1,33 @@
-//2018.11.14
+import 'jquery.transit'
+import 'pxloader/PxLoaderImage'
+import { ibase, os } from 'base.js'
+import imath from 'math.js'
+import { ibgm, iaudio } from 'audio.js'
+import imonitor from 'monitor.js'
+const ishare = importShare()
+const icom = importCom()
+//-------------------------------------------------------自定义分享内容
+ishare.wxId = 'wx1c1f89b6f490b8e7';//微信 appid
+ishare.tbId = '';//手淘 appid
+var hrefs = window.location.href.split('?');
+ishare.url = hrefs[0].substr(0, hrefs[0].lastIndexOf('/') + 1);
+ishare.content = {
+    link: ishare.url,
+    image: ishare.url + 'images/share.jpg?v=' + Math.random(),
+    title: $('title').html(),
+    friend: '发送给朋友的分享文案',
+    timeline: '发送到给朋友圈的分享文案',
+    weibo: '发送到微博的分享文案'
+};
+console.log(ishare.content);
+if (os.weixin) {
+    ishare.from = icom.getQueryString('from');
+    ishare.from = ishare.from || 'friend';
+    ishare.from = ishare.from == 'groupmessage' || ishare.from == 'singlemessage' ? 'friend' : ishare.from;
+    console.log('微信分享来源：' + ishare.from);
+    ishare.wxSign();
+}
+// com.js
 function importCom() {
     var com = {};
 
@@ -7,22 +36,22 @@ function importCom() {
         var article = $('article');
         if (ibase.dir == 'portrait') {
             lock_dected();
-        }//edn if
+        }
         else {
             html_resize();
             $(window).on('resize', window_orientation);
             lock_dected();
-        } //end else
+        }
 
         function lock_dected() {
             if (ibase.lock) requestAnimationFrame(lock_dected);
             else if (callback) callback();
-        } //edn func
+        }
 
         function window_orientation(e) {
             if (os.ios) for (var i = 0; i < 3; i++) setTimeout(html_resize, i * 150);
             else html_resize();
-        } //edn func
+        }
 
         function html_resize() {
             var dir = ibase.getOrient(true);
@@ -41,7 +70,7 @@ function importCom() {
                         x: os.iphoneX ? 0 : (window.innerHeight / scale - ibase.landscapeWidth) * 0.5,
                         y: -ibase.landscapeHeight + (ibase.landscapeHeight - window.innerWidth / scale) * 0.5
                     });
-                } //edn if
+                }
                 else {
                     var scale = [window.innerWidth / ibase.landscapeHeight, window.innerHeight / ibase.landscapeWidth];
                     console.log('window size:' + window.innerHeight + '/' + window.innerWidth);
@@ -57,8 +86,8 @@ function importCom() {
                         x: 0,
                         y: -ibase.landscapeHeight
                     });
-                } //end else
-            } //end if
+                }
+            }
             else {
                 console.log('screen landscape');
                 if (ibase.landscapeScaleMode == 'cover' || ibase.landscapeScaleMode == 'contain') {
@@ -75,7 +104,7 @@ function importCom() {
                         x: (window.innerWidth / scale - ibase.landscapeWidth) * 0.5 + os.iphoneX && window.innerWidth > 724 ? ibase.iphoneXOffsetLandscape / scale : 0,
                         y: (window.innerHeight / scale - ibase.landscapeHeight) * 0.5
                     });
-                } //edn if
+                }
                 else {
                     var scale = [window.innerWidth / ibase.landscapeWidth, window.innerHeight / ibase.landscapeHeight];
                     console.log('window size:' + window.innerHeight + '/' + window.innerWidth);
@@ -91,11 +120,11 @@ function importCom() {
                         x: 0,
                         y: 0
                     });
-                } //end else
-            } //end else
-        } //edn func
+                }
+            }
+        }
 
-    } //edn func
+    }
 
     //解锁屏幕滑动
     com.screenScrollEnable = function () {
@@ -105,11 +134,11 @@ function importCom() {
             article.css({ 'overflow-y': 'auto' });
             if (os.ios) html.css({ 'position': 'relative' });
             $(document).off('touchmove', noScroll);
-        }//edn if
+        }
         else {
             article.off('touchmove', noScroll);
-        }//edn else
-    } //end func
+        }
+    }
 
     //锁定屏幕滑动
     com.screenScrollUnable = function () {
@@ -119,15 +148,15 @@ function importCom() {
             article.css({ 'overflow-y': 'hidden' });
             if (os.ios) html.css({ 'position': 'fixed' });
             $(document).on('touchmove', noScroll);
-        }//edn if
+        }
         else {
             article.on('touchmove', noScroll);
-        }//edn else
-    } //end func
+        }
+    }
 
     function noScroll(e) {
         e.preventDefault();
-    } //end func
+    }
 
     //取代jquery的fadeIn
     com.fadeIn = function (obj, dur, callback) {
@@ -140,8 +169,8 @@ function importCom() {
             }, dur, function () {
                 if (callback) callback($(this));
             });
-        } //end if
-    } //end func
+        }
+    }
 
     //取代jquery的fadeOut
     com.fadeOut = function (obj, dur, callback) {
@@ -155,8 +184,8 @@ function importCom() {
                 });
                 if (callback) callback($(this));
             });
-        } //end if
-    } //end func
+        }
+    }
 
     //打开弹窗，会自动寻找a.close对象绑定关闭事件，并在关闭时执行回调
     com.popOn = function (obj, options) {
@@ -175,7 +204,7 @@ function importCom() {
             if (opts.closeBtn.length > 0 && opts.closeType == 'button') opts.closeBtn.one(opts.closeEvent, obj_close);
             else obj.one(opts.closeEvent, obj_close);
             obj.on('close', obj_close);
-        } //end if
+        }
         function obj_close(e) {
             if (opts.closeBtn.length > 0 && opts.closeType == 'button') opts.closeBtn.off(opts.closeEvent, obj_close);
             else obj.off(opts.closeEvent, obj_close);
@@ -186,13 +215,13 @@ function importCom() {
             else obj.hide();
             obj.off('close', obj_close);
             opts.onClose(obj);
-        } //end func
-    } //end func
+        }
+    }
 
     //关闭使用popOn方法打开的弹窗
     com.popOff = function (obj) {
         if (obj && obj.length > 0) obj.trigger('close');
-    } //end func
+    }
 
     //取代系统alert
     com.alert = function (text, callback) {
@@ -204,8 +233,8 @@ function importCom() {
                 remove: true,
                 closeEvent: 'click'
             });
-        } //end if
-    } //end func
+        }
+    }
 
     //带有“取消”和“确认”按钮的对话框
     com.confirm = function (text, callbackConfirm, callbackCancel, btnCancelText, btnConfirmText) {
@@ -221,8 +250,8 @@ function importCom() {
                 btn.off();
                 box.remove();
             })
-        } //end if
-    } //end func
+        }
+    }
 
     //获得http url参数
     com.getQueryString = function (name) {
@@ -231,15 +260,15 @@ function importCom() {
             var r = window.location.search.substr(1).match(reg);
             if (r != null) return decodeURIComponent(r[2]);
             return null;
-        } //end if
+        }
         else return null;
-    } //end func
+    }
 
     //获取路径
     com.getPath = function (path) {
         if (path && path != '') return path.substr(0, path.lastIndexOf('/') + 1);
         else return false;
-    } //edn func
+    }
 
     //载入图片函数
     com.imageLoad = function (src, callback) {
@@ -248,14 +277,14 @@ function importCom() {
             if ($.type(src) === "string" && src != '') loader.addImage(src);
             else if ($.type(src) === "array" && src.length > 0) {
                 for (var i = 0; i < src.length; i++) loader.addImage(src[i]);
-            } //end else
+            }
             loader.addCompletionListener(function () {
                 loader = null;
                 if (callback) callback(src);
             });
             loader.start();
-        } //end if
-    } //end func	
+        }
+    }
 
     //常用正则
     com.checkStr = function (str, type) {
@@ -292,9 +321,9 @@ function importCom() {
             } //end switch
             if (reg.exec($.trim(str))) return true;
             else return false;
-        } //end if
+        }
         else return false;
-    } //end func
+    }
 
     //解决ios下input、textarea无法自动失去焦点的问题
     com.keyboard = function (input) {
@@ -303,7 +332,7 @@ function importCom() {
             var body = $('body');
             if (os.ios) input.on('focus', input_focus).on('blur', input_blur);
             else body.height(body[0].clientHeight);
-        } //end if
+        }
         function input_focus(e) {
             body.one('touchend', ios_blur);
         }//edn event
@@ -313,7 +342,7 @@ function importCom() {
         function ios_blur(e) {
             if (e.target != input[0]) input.blur();
         }//edn event
-    } //end func
+    }
 
     //解决ios下select无法自动失去焦点的问题
     com.select = function (select) {
@@ -323,14 +352,14 @@ function importCom() {
                 select.on('focus', function (e) {
                     $(document).one('touchend', ios_select);
                 });
-            } //end if
-        } //end if
+            }
+        }
 
         function ios_select(e) {
             if (e.target != select[0]) select.blur();
-        } //edn func
+        }
 
-    } //end func
+    }
 
     //物体抖动
     com.shake = function (box, options) {
@@ -357,10 +386,10 @@ function importCom() {
                     y: 0
                 });
                 if (opts.onComplete) opts.onComplete();
-            } //end if
+            }
             else setTimeout(com.shake, opts.delay, box, opts);
-        } //end if
-    } //end func
+        }
+    }
 
     //获取textarea里的回车和空格
     com.textareaGet = function (textarea, row) {
@@ -370,14 +399,14 @@ function importCom() {
         else {
             var str2 = str1.replaceAll("\n", "<br/>");
             return row_cut(str2, row);
-        } //end else
-    } //edn func
+        }
+    }
 
     //输入textarea里的回车和空格
     com.textareaSet = function (textarea, str) {
         if (str == '') textarea.val('');
         else textarea.val(str.replaceAll("<br/>", "\n"));
-    } //edn func
+    }
 
     //限制textarea输入文字的行数
     com.textareaLock = function (textarea) {
@@ -388,11 +417,11 @@ function importCom() {
             var max = parseInt(textarea.attr('maxlength')) || 0;
             max = max == 0 ? row * col : max;
             if (row > 0 && col > 0 && max > 0) textarea.on('focus', textarea_focus).on('blur', textarea_blur);
-        } //end if
+        }
 
         function textarea_focus(e) {
             timer = requestAnimationFrame(textarea_lock);
-        } //edn func
+        }
 
         function textarea_blur(e) {
             cancelAnimationFrame(timer);
@@ -407,8 +436,8 @@ function importCom() {
                 str3 = row_cut(str3, row);
                 var final = str3.replaceAll("<br/>", "\n");
                 textarea.val(final);
-            } //end if
-        } //edn func
+            }
+        }
 
         function textarea_lock() {
             var first = com.textareaGet(textarea, row);
@@ -418,8 +447,8 @@ function importCom() {
             else textarea.attr({
                 maxlength: max + (first.split('<br/>').length - 1) * 2
             });
-        } //edn func
-    } //edn func
+        }
+    }
 
     function row_cut(str, row) {
         row = row || 0;
@@ -432,8 +461,8 @@ function importCom() {
                 if (i < row - 1) str3 += '<br/>';
             } //edn for
             return str3;
-        } //end else
-    } //end func
+        }
+    }
 
     function col_break(str, col) {
         var line = Math.ceil(str.length / col);
@@ -446,18 +475,18 @@ function importCom() {
                 else str1 += str.substr(i * col);
             } //edn for
             return str1;
-        } //end else
-    } //end func
+        }
+    }
 
     function col_cut(str, col) {
         if (str.length > col) return str.substr(0, col);
         else return str;
-    } //end func
+    }
 
     //限制textarea输入文字的行数
     com.textareaUnlock = function (textarea) {
         textarea.off();
-    } //edn func
+    }
 
     //切割单行文字成几行
     com.textToMulti = function (str, col) {
@@ -471,11 +500,11 @@ function importCom() {
                     else str1 += str.substr(i * col);
                 } //edn for
                 return str1;
-            } //end if
+            }
             else return str;
-        }//edn if
+        }
         else return null;
-    } //edn func
+    }
 
     //拼带参数的url链接
     com.url = function (url, para) {
@@ -487,30 +516,30 @@ function importCom() {
             url += key + '=' + para[key]
         } //end for
         return url;
-    }; //end func
+    };
 
     //以帧为单位的setTimeout
     com.setTimeout = function (callback, frame) {
         if (frame > 0 && callback) return setTimer(callback, frame, false);
-    } //edn func
+    }
 
     com.clearTimeout = function (timer) {
         if (timer && timer.timer) clearTimer(timer);
-    } //edn func
+    }
 
     //以帧为单位的setInterval
     com.setInterval = function (callback, frame) {
         if (frame > 0 && callback) return setTimer(callback, frame, true);
-    } //edn func
+    }
 
     com.clearInterval = function (timer) {
         if (timer && timer.timer) clearTimer(timer);
-    } //edn func
+    }
 
     function clearTimer(timer) {
         cancelAnimationFrame(timer.timer);
         timer = null;
-    } //edn func
+    }
 
     function setTimer(callback, frame, interval) {
         var timer = {
@@ -526,11 +555,11 @@ function importCom() {
             if (timeup) {
                 timer.now = 0;
                 callback();
-            } //end if
+            }
             if (interval || (!interval && !timeup)) timer.timer = requestAnimationFrame(timer_handler);
-        } //end func
+        }
 
-    } //edn func
+    }
 
     //将canvas转成存在cdn服务器上的远程图片地址
     com.canvas_send = function (canvas, callback, secretkey, type, compress) {
@@ -541,8 +570,8 @@ function importCom() {
             if (type == 'png') var base64 = canvas.toDataURL('image/png');
             else var base64 = canvas.toDataURL('image/jpeg', compress);
             this.base64_send(base64, callback, secretkey);
-        } //edn if
-    } //end func
+        }
+    }
 
     //将base64数据格式转成存在cdn服务器上的远程图片地址
     com.base64_send = function (base64, callback, secretkey) {
@@ -554,13 +583,13 @@ function importCom() {
             }, function (resp) {
                 if (resp.errcode == 0) {
                     if (callback) callback(resp.result);
-                }//edn if
+                }
                 else {
                     console.log('errmsg:' + resp.errmsg);
-                }//edn else
+                }
             }, 'json');
-        } //edn if
-    } //end func
+        }
+    }
 
     //将跨域的远程图片地址转成base64数据格式，解决图片跨域问题
     com.base64_get = function (link, callback, secretkey) {
@@ -572,8 +601,8 @@ function importCom() {
             }, function (resp) {
                 if (callback) callback(resp);
             }, 'text');
-        } //edn if
-    } //end func
+        }
+    }
 
     //将字符串转成二维码，返回base64数据格式
     com.qrcode = function (txt, options) {
@@ -582,9 +611,9 @@ function importCom() {
         if (txt && txt != '') {
             var src = 'http://tool.h5-x.com/image/qrcode?txt=' + txt + '&size=' + data.size + '&color=' + data.color + '&bg=' + data.bg + '&border=' + data.border + '&error=' + data.error + (data.logo ? '&logo=' + data.logo : '');
             return src;
-        }//edn if
+        }
         else return null;
-    } //end func
+    }
 
     //将字符串转成条形码，返回base64数据格式
     com.barcode = function (txt, options) {
@@ -593,9 +622,9 @@ function importCom() {
         if (txt && txt != '') {
             var src = 'http://tool.h5-x.com/image/barcode?txt=' + txt + '&width=' + data.width + '&height=' + data.height + '&color=' + data.color + '&bg=' + data.bg + '&pure=' + data.pure;
             return src;
-        }//edn if
+        }
         else return null;
-    } //end func
+    }
 
     //一键复制字符串到剪贴板
     com.clipboard = function (box, val, onComplete, onError) {
@@ -604,13 +633,13 @@ function importCom() {
         if (support) {
             if (box.length > 0 && val != '') {
                 box.attr({ 'data-copy': val }).on('click', { callback: onComplete }, copyText);
-            }//edn if
-        }//edn if
+            }
+        }
         else {
             console.log('浏览器不支持复制文本到剪贴板');
             if (onError) onError();
-        }//end else
-    }//edn func
+        }
+    }
 
     function copyText(e) {
         var val = $(this).data('copy');
@@ -622,7 +651,7 @@ function importCom() {
         input.remove();
         input = null;
         if (e.data.callback) e.data.callback();
-    }//edn func
+    }
 
     //显示页面渲染fps
     com.fpsShow = function (shell, space) {
@@ -643,13 +672,13 @@ function importCom() {
                 else if (fps >= 20) var classname = 'fpsNormal';
                 else var classname = 'fpsSlow';
                 shell.removeClass().addClass(classname).html('fps:' + fps);
-            }//edn if
+            }
             requestAnimationFrame(function () {
                 fps_dected(now, count);
             });
-        }//edn func
+        }
 
-    }//edn func
+    }
 
     //出血方案
     com.bleed = function (shell, maxSize) {
@@ -659,10 +688,10 @@ function importCom() {
             var article = $('article');
             resize_handler();
             $(window).on('resize', shell_resize);
-        }//edn if
+        }
         function shell_resize(e) {
             com.setTimeout(resize_handler, 5);
-        }//edn func
+        }
         function resize_handler() {
             if (window.innerWidth < window.innerHeight) {
                 var windowScale = window.innerWidth / 750;
@@ -672,8 +701,8 @@ function importCom() {
                     transformOrigin: '50% ' + (os.iphoneX ? 0 : '0.15rem'),
                     scale: scale
                 });
-            }//edn func
-        }//edn func
+            }
+        }
     }//edn fun
 
     //为iphoneX加上底部安全区域
@@ -682,7 +711,7 @@ function importCom() {
         if (os.FullBar) {
             window_resize();
             $(window).on('resize', window_resize);
-        }//edn if
+        }
         function window_resize(e) {
             if (window.innerHeight > 667) $('article').css({ height: 'calc( 100% - ' + (ht * 0.01) + 'rem )' });
             else $('article').css({ height: '100%' });
@@ -696,10 +725,10 @@ function importCom() {
         if (shell.length > 0) {
             resize_handler();
             $(window).on('resize', shell_resize);
-        }//edn if
+        }
         function shell_resize(e) {
             com.setTimeout(resize_handler, 5);
-        }//edn func
+        }
         function resize_handler() {
             var w = shell.width(), h = shell.height();
             var iw = articleBox.width(), ih = articleBox.height();
@@ -721,7 +750,7 @@ function importCom() {
             shell.css({
                 scale: sRatio
             });
-        }//edn func
+        }
     }//edn fun
 
     // 获取开始时间倒结束时间之间n年n月n日
@@ -879,11 +908,260 @@ function importCom() {
         }
     }
     return com;
+}
 
-} //end import
+// share.js
+function importShare() {
+    var imonitor = window.imonitor || {};
+    var share = {};
+    share.wxSigned = false;
+    share.tbSigned = false;
+    share.tbLoaded = 0;
 
-(function (global, factory) {
-    factory(global);
-})(typeof window !== "undefined" ? window : this, function (global) {
-    global.icom = importCom();
-})
+    //-------------------------------------------------------微信SDK验证
+    share.wxSign = function () {
+        $.get("http://scrm.h5-x.com/api/jssdk/sign", { appid: share.wxId, url: location.href }, function (data) {
+            wx.config({
+                debug: false,
+                appId: data.appid,
+                timestamp: data.timestamp,
+                nonceStr: data.noncestr,
+                signature: data.signature,
+                jsApiList: [
+                    'checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onRecordEnd',
+                    'playVoice',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay',
+                    'openProductSpecificView',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+                ]
+            });//end wx.config
+            share.wxSigned = true;//通过微信新SDK验证
+            wx.ready(function () {
+                wx.showOptionMenu();//用微信“扫一扫”打开，optionMenu是off状态，默认开启
+                share.wxShare();
+            });//end wx.ready
+        }, 'json');//end ajax
+    }
+
+    //-------------------------------------------------------微信分享函数
+    share.wxShare = function () {
+        if (share.wxSigned) {
+            var sharelink = share.content.link;
+            if (localStorage.openid) {
+                sharelink = sharelink + (sharelink.indexOf('?') > 0 ? '&' : '?') + 'from_openid=' + localStorage.openid;
+            }
+            wx.onMenuShareTimeline({
+                title: share.content.timeline, // 分享标题
+                link: sharelink, // 分享链接
+                imgUrl: share.content.image, // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    if (imonitor.add) imonitor.add({ label: '分享到朋友圈' });
+                    if (share.wxShareSuccess) share.wxShareSuccess();
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                    if (share.wxShareCancel) share.wxShareCancel();
+                }
+            });
+            wx.onMenuShareAppMessage({
+                title: share.content.title, // 分享标题
+                desc: share.content.friend, // 分享描述
+                link: sharelink, // 分享链接
+                imgUrl: share.content.image, // 分享图标
+                type: 'link', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    if (imonitor.add) imonitor.add({ label: '分享给朋友' });
+                    if (share.wxShareSuccess) share.wxShareSuccess();
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                    if (share.wxShareCancel) share.wxShareCancel();
+                }
+            });
+        }
+        else setTimeout(share.wxShare, 250);
+    }
+
+    //-------------------------------------------------------微博站外分享函数
+    share.wbShare = function (option) {
+        var url, txt, img, imgHtml = '';
+        if (option.obj) var btn = option.obj;
+        else var btn = $('a.btnShare');
+        if (btn.length > 0) {
+            url = option.url || window.location.href;
+            txt = option.text || "";
+            img = option.image;
+            txt = encodeURIComponent(txt);
+            url = encodeURIComponent(url);
+            if (img && img.length > 0) {
+                imgHtml = "&pic=";
+                if ($.type(img) === "string") imgHtml += img;
+                else for (var i = 0; i < img.length; i++) {
+                    imgHtml += img[i];
+                    if (i < img.length - 1) imgHtml += '||'
+                }//end for
+                imgHtml += '&searchPic=false';
+            }//end for
+            btn.attr({ target: '_blank', href: 'http://service.weibo.com/share/share.php?url=' + url + '&title=' + txt + imgHtml });
+        }
+    }
+
+    //-------------------------------------------------------一键分享按钮，在微信下弹窗分享提示层，在浏览器下用微博外链式分享
+    share.btnShare = function (btn, box) {
+        if (btn) var shareBtn = btn;
+        else var shareBtn = $('a.btnShare');
+        if (box) var shareBox = box;
+        else var shareBox = $('#shareBox');
+        if (shareBtn.length > 0) {
+            share.shareBtn = shareBtn;
+            if (os.weixin) {
+                if (shareBox.length == 0) shareBox = $(`<aside class="shareBox"><img src="${require('../../images/common/share.png')}"></aside>`).appendTo(ibase.landscapeMode ? 'article' : 'body');
+                shareBtn.on('touchend', { box: shareBox }, shareBtn_click);
+            }
+            else share.wbShare({ obj: shareBtn, url: share.content.link, text: share.content.weibo, image: share.content.image });
+        }
+    }
+
+    function shareBtn_click(e) {
+        var shareBox = e.data.box;
+        shareBox.show().one('touchend', function (e) {
+            $(this).hide();
+        });
+    }
+
+    //-------------------------------------------------------重置分享内容
+    share.reset = function (opts) {
+        if (opts) {
+            if (opts.link) share.content.link = opts.link;
+            if (opts.image) share.content.image = opts.image + '?v=' + Math.random();
+            if (opts.title) share.content.title = opts.title;
+            if (opts.friend) share.content.friend = opts.friend;
+            if (opts.timeline) share.content.timeline = opts.timeline;
+            if (os.weixin) wx.ready(function () {
+                share.wxShare();
+            });//end wx.ready
+            else share.wbShare({ obj: share.shareBtn, url: share.content.link, text: share.content.timeline, image: share.content.image });
+        }
+    }
+
+    share.hideMenu = function (menuList) {
+        wx.ready(function () {
+            menuList = menuList || ["menuItem:copyUrl"];
+            wx.hideMenuItems({
+                menuList: ["menuItem:copyUrl"] // 要隐藏的菜单项
+            });
+        });//end wx.ready
+    }
+
+    //-------------------------------------------------------手淘分享
+    share.tbSign = function () {
+        if (this.tbId != '') {
+            console.log('tbId:' + this.tbId);
+            document.write('<meta name="spm-id" content="a1z51.' + this.tbId + '"/>');
+            document.write('<meta id="WV.Meta.Share.Title" value="' + this.content.title + '" />');
+            document.write('<meta id="WV.Meta.Share.Text" value="' + this.content.timeline + '" />');
+            document.write('<meta id="WV.Meta.Share.Image" value="' + this.content.image + '" />');
+            ibase.loadJs('//g.alicdn.com/tmapp/tida/3.3.26/tida.js?appkey=' + this.tbId, 'body', tbDeccted);
+        }
+    }
+
+    function tbDeccted() {
+        if (Tida) {
+            share.Tida = Tida.appinfo.isTaobao || Tida.appinfo.isTmall;
+            share.TidaNick = '';
+            thLogin();
+        }
+        else requestAnimationFrame(tbDeccted);
+    }
+
+    function thLogin() {
+        Tida.ready({
+            //		 console : 1//1代表开启debug
+        }, function (data) {
+            console.log('Tida.ready');
+            Tida.isLogin(function (data) {
+                console.log(JSON.stringify(data));
+                console.log(data.isLogin ? '淘宝用户已登录...' : '淘宝用户未登录...');
+                if (data.isLogin) {
+                    Tida.doAuth(function (data) {
+                        console.log('errorCode:' + data.errorCode);
+                        console.log('errorMessage:' + data.errorMessage);
+                        if (data.finish) {
+                            // 授权成功 可以顺利调用需要授权的接口了
+                            var options = {
+                                sellerNick: ""
+                            };
+                            Tida.mixNick(options, function (data) {
+                                console.log(JSON.stringify(data));
+                                share.TidaNick = data.data.mixnick;
+                                console.log('TidaNick:' + TidaNick);
+                            });
+                        } else {
+                            // 未能成功授权
+                            alert('未能成功授权');
+                        }
+                    });
+                }
+                else {
+                    alert('请先登录');
+                }
+            });
+        });
+    }
+
+    share.tbShare = function (url, title, content, image) {//重新自定义手淘分享内容
+        Tida.share({
+            title: title, // 分享标题 在来往和微信好友中有标题显示
+            content: content, //分享的内容
+            url: url, // 跳转地址，分享的内容跳转的url
+            image: image
+        }, function (data) {
+            // 分享接口调用成功，在手机淘宝下面该回调仅代表API执行成功，非分享成功与否的回调。
+        });
+    }
+
+    return share;
+}
+
+export {
+    icom,
+    ishare,
+    ibase,
+    os,
+    ibgm,
+    iaudio,
+    imonitor,
+    imath
+} 

@@ -1,5 +1,5 @@
 import '@/css/common.css'
-import 'base.js'
+import {ibase,os} from 'base.js'
 var articleBox = $('article');
 articleBox.fadeTo("slow", 1);// 显示页面
 window.addEventListener('resize', window_orientationchange, false);

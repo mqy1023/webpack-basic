@@ -251,8 +251,6 @@ function importMath() {
     return math;
 
 } //end import
-(function (global, factory) {
-	factory(global);
-})(typeof window !== "undefined" ? window : this, function (global) {
-	global.imath = importMath();
-})
+const imath = importMath();
+
+export default imath

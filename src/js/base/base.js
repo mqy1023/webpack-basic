@@ -299,9 +299,7 @@ function importBase() {
 	
 	return base;
 } //end func
-(function (global, factory) {
-	factory(global);
-})(typeof window !== "undefined" ? window : this, function (global) {
-	global.ibase = importBase();
-	global.os = importOS();
-})
+
+export const ibase = importBase();
+
+export const os = importOS();
