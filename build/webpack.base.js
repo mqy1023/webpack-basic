@@ -1,9 +1,7 @@
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const projectConfig = require('../app.js');
+const APP = require('../app.js');
 const path = require('path')
 let webpackConfig = {
   entry: {},
@@ -21,34 +19,19 @@ let webpackConfig = {
   module: {
     rules: [
       {
-        test: require.resolve('pxloader'),
-        use: {
-          loader: 'expose-loader',
-          options: 'PxLoader'
-        }
-      },
-      {
-        test: require.resolve('jquery'),
-        use: [{
-          loader: 'expose-loader',
-          options: 'jquery',
-        },
-        {
-          loader: 'expose-loader',
-          options: '$',
-        }]
-      },
-      {
         test: /\.(png|jpg|gif|jpeg)$/,
         use: [
           {
             loader: 'url-loader',
             options: {
-              limit: 8192,
+              // 超过5KB打包成图片
+              limit: APP.image.limit || 5 * 1024,
               // 打包输出目录
-              outputPath: 'images',
+              outputPath: APP.image.outputPath || 'images',
               // 打包输出图片名称
-              name: '[name]-[hash:4].[ext]'
+              name: '[name]-[hash:4].[ext]',
+              // 文件路径
+              publicPath: APP.image.publicPath || ''
             }
           }
         ]
@@ -87,25 +70,33 @@ let webpackConfig = {
         loader: 'html-withimg-loader'
       }
     ]
-  },
-  optimization: {
-    minimizer: [
-      new TerserJSPlugin({}),
-      new OptimizeCSSAssetsPlugin({}),
-    ],
-    splitChunks: { chunks: "all" }
   }
 }
-if (typeof projectConfig === 'object' && typeof projectConfig.pages === 'object') {
-  projectConfig.pages.map(page => {
-    webpackConfig.entry[page.name] = `./src/${page.entry}`;
-    webpackConfig.plugins.push(new htmlWebpackPlugin({
-      template: './src/' + page.html,
-      filename: page.name + '.html',
-      chunks: [page.name]
-    }))
-  })
+if (typeof APP === 'object') {
+  // 遍历配置page
+  if (Array.isArray(APP.pages)) {
+    APP.pages.map(page => {
+      webpackConfig.entry[page.name] = `./src/${page.entry}`;
+      webpackConfig.plugins.push(new htmlWebpackPlugin({
+        template: './src/' + page.html,
+        filename: page.name + '.html',
+        chunks: [page.name]
+      }))
+    })
+  }
+  // 配置全局第三方模块
+  if (Array.isArray(APP.expose)) {
+    APP.expose.map(node => {
+      webpackConfig.module.rules.push({
+        test: require.resolve(node.module_name),
+        use: node.name.map(name => {
+          return { loader: 'expose-loader', options: name }
+        })
+      })
+    })
+  }
 }
+// 是否需要删除dist目录
 if (process.env.npm_lifecycle_event !== 'server') {
   webpackConfig.plugins.push(new CleanWebpackPlugin({}))
 }

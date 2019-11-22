@@ -1,8 +1,6 @@
 
 // 默认模板
-import 'jquery'
 import 'jquery.transit'
-import 'pxloader'
 import 'pxloader/PxLoaderImage'
 import 'base.js'
 import 'com.js'
@@ -13,7 +11,6 @@ import '@/css/common.css'
 import './index.scss'
 ibase.init({dir:'portrait',lock:true});
 $(document).ready(function () {
-
   //-----------------------------------------定义和初始化变量----------------------------------------
   var articleBox = $('article');
   var loadBox = $('aside#loadBox');

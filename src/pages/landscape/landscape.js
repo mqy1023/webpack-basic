@@ -1,7 +1,5 @@
 // 默认模板
-import 'jquery'
 import 'jquery.transit'
-import 'pxloader'
 import 'pxloader/PxLoaderImage'
 import 'base.js'
 import 'com.js'

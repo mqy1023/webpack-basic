@@ -89,6 +89,11 @@ function importBase() {
 		console.log('screenLock:' + this.screenLock);
 		this.debug = parseInt(this.getQueryString('debug')) || 0;
 		console.log('ibase debug:' + base.debug);
+		if (this.debug) {
+			base.load('js/base/vConsole.min.js','body',function(){
+				this.Console = new VConsole();
+			})
+		}
 		if(this.dir == 'portrait') {
 			font_resize();
 			window.addEventListener("resize", window_fontResize, false);
