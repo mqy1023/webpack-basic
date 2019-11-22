@@ -35,6 +35,7 @@ module.exports = {
     // 打包资源输出目录
     outputPath: 'images',
     // 打包资源输出路径（用作cdn）默认为空
-    publicPath: 'http://localhost:8080/images'
+    publicPath: ''
+    // publicPath: 'http://localhost:8080/images'
   }
 }
