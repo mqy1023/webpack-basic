@@ -2,7 +2,8 @@ const htmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const APP = require('../app.js');
-const path = require('path')
+const path = require('path');
+const projectPath = path.resolve(__dirname, '../src');
 let hash;
 // hash配置
 if (!APP.hash) {
@@ -20,13 +21,14 @@ let webpackConfig = {
     })
   ],
   resolve: {
-    modules: ['../src/js/base', 'node_modules'],
-    alias: { '@': path.resolve(__dirname, '../src') }
+    modules: ['../src/js', 'node_modules'],
+    alias: { '@': projectPath }
   },
   module: {
     rules: [
       {
         test: /\.(png|jpg|gif|jpeg)$/,
+        include: projectPath,
         use: [
           {
             loader: 'url-loader',
@@ -45,6 +47,7 @@ let webpackConfig = {
       },
       {
         test: /\.css$/,
+        include: projectPath,
         use: [{
           loader: MiniCssExtractPlugin.loader,
           options: {
@@ -54,6 +57,7 @@ let webpackConfig = {
       },
       {
         test: /\.scss$/,
+        include: projectPath,
         use: [{
           loader: MiniCssExtractPlugin.loader,
           options: {
@@ -63,7 +67,7 @@ let webpackConfig = {
       },
       {
         test: /\.m?js$/,
-        exclude: /node_modules/,
+        include: projectPath,
         use: {
           loader: 'babel-loader',
           options: {
@@ -74,6 +78,7 @@ let webpackConfig = {
       },
       {
         test: /\.(html)$/i,
+        include: projectPath,
         loader: 'html-withimg-loader'
       }
     ]

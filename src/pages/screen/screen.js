@@ -1,5 +1,5 @@
 import '@/css/common.css'
-import {ibase,os} from 'base.js'
+import { ibase } from 'base/base.js'
 var articleBox = $('article');
 articleBox.fadeTo("slow", 1);// 显示页面
 window.addEventListener('resize', window_orientationchange, false);
@@ -8,7 +8,7 @@ window_orientationchange();
 console.log('window history', window.history);
 console.log('window history', window.history);
 if (window.history.length == 2) {
-  
+
 }//edn if
 
 function window_orientationchange(event) {

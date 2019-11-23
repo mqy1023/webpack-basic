@@ -1,9 +1,9 @@
 import 'jquery.transit'
 import 'pxloader/PxLoaderImage'
-import { ibase, os } from 'base.js'
-import imath from 'math.js'
-import { ibgm, iaudio } from 'audio.js'
-import imonitor from 'monitor.js'
+import { ibase, os } from 'base/base.js'
+import imath from 'base/math.js'
+import { ibgm, iaudio } from 'base/audio.js'
+import imonitor from 'base/monitor.js'
 const ishare = importShare()
 const icom = importCom()
 //-------------------------------------------------------自定义分享内容

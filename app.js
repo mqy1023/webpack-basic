@@ -1,4 +1,10 @@
 // 未完成功能，抽取共用css模块，js文件优化
+/**
+* npm run server：启动开发环境本地服务器
+* npm run dev：启动开发项目打包（代码未压缩）
+* npm run prod：启动正式环境项目打包（代码压缩）
+* npm run start：以dist目录为根目录启动一个服务器
+*/
 module.exports = {
   // 配置页面
   pages: [
@@ -39,15 +45,15 @@ module.exports = {
     publicPath: ''
     // publicPath: 'http://localhost:8080/images'
   },
-   /**
-   * 资源hash值，防浏览器缓存，客户端不更新
-   * none: 不启用hash
-   *语法-- 
-   * hash: hash是跟整个项目的构建相关，只要项目里有文件更改，整个项目构建的hash值都会更改，并且全部文件都共用相同的hash值
-   * chunkhash: chunkhash根据不同的入口文件进行依赖文件解析、构建对应的chunk，生成对应的哈希值。
-   * contenthash: 文件内容改变则生成新的hash值
-   * :Number为hash长度
-   * -为文件名与hash直接的拼接字符
-   */
+  /**
+  * 资源hash值，防浏览器缓存，客户端不更新
+  * none: 不启用hash
+  *语法-- 
+  * hash: hash是跟整个项目的构建相关，只要项目里有文件更改，整个项目构建的hash值都会更改，并且全部文件都共用相同的hash值
+  * chunkhash: chunkhash根据不同的入口文件进行依赖文件解析、构建对应的chunk，生成对应的哈希值。
+  * contenthash: 文件内容改变则生成新的hash值
+  * :Number为hash长度
+  * -为文件名与hash直接的拼接字符
+  */
   hash: '-[contenthash:4]'
 }
