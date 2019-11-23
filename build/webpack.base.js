@@ -33,13 +33,9 @@ let webpackConfig = {
           {
             loader: 'url-loader',
             options: {
-              // 超过5KB打包成图片
               limit: APP.image.limit || 5 * 1024,
-              // 打包输出目录
               outputPath: APP.image.outputPath || 'images',
-              // 打包输出图片名称
               name: `[name]${APP.hash}.[ext]`,
-              // 文件路径
               publicPath: APP.image.publicPath || ''
             }
           }
