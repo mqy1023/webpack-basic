@@ -52,7 +52,7 @@ function importMonitor() {
 			'event_category': data.category,
 			'event_label': data.label
 		});
-		if (window.console) window.console.log('事件：' + ' | ' + '类别：' + data.category + ' | ' + '标签：' + data.label);
+		console.log('事件：' + ' | ' + '类别：' + data.category + ' | ' + '标签：' + data.label);
 	} //end func
 
 	return monitor;

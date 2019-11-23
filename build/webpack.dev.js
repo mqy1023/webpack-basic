@@ -1,7 +1,7 @@
 const merge = require('webpack-merge');
 const webpackBase = require('./webpack.base.js');
 const webpack = require('webpack');
-module.exports = merge(webpackBase, {
+let webpackConfig = {
   mode: 'development',// webpack打包模式
   devServer: {
     proxy: {
@@ -12,9 +12,10 @@ module.exports = merge(webpackBase, {
     }
   },
   devtool: 'cheap-module-eval-source-map',
-  plugins:[
+  plugins: [
     new webpack.DefinePlugin({
       IS_DEV: 'true'
     })
   ]
-})
+}
+module.exports = merge(webpackBase, webpackConfig)

@@ -7,6 +7,7 @@
     "server": "webpack-dev-server --config ./build/webpack.dev.js",
     "dev": "webpack --config ./build/webpack.dev.js",
     "prod": "webpack --config ./build/webpack.prod.js",
+    "analys": "webpack --config ./build/webpack.prod.js",
     "start": "live-server ./dist"
   },
   "author": "",

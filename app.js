@@ -1,9 +1,10 @@
-// 未完成功能，抽取共用css模块，js文件优化
 /**
 * npm run server：启动开发环境本地服务器
-* npm run dev：启动开发项目打包（代码未压缩）
+* npm run dev：启动开发项目打包（代码未压缩, 未做代码分离（提取复用模块））
 * npm run prod：启动正式环境项目打包（代码压缩）
 * npm run start：以dist目录为根目录启动一个服务器
+* npm run analys：启用打包分析，启动一个可视化的打包数据分析
+* IS_DEV：src目录下的环境变量true为development环境false为production
 */
 module.exports = {
   // 配置页面
@@ -55,5 +56,7 @@ module.exports = {
   * :Number为hash长度
   * -为文件名与hash直接的拼接字符
   */
-  hash: '-[contenthash:4]'
+  hash: '-[contenthash:4]',
+  // production模式下，是否去除console默认为true
+  drop_console: false
 }

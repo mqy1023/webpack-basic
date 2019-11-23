@@ -2,15 +2,22 @@ const merge = require('webpack-merge')
 const webpackBase = require('./webpack.base.js')
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const webpack = require('webpack')
-module.exports = merge(webpackBase, {
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const webpack = require('webpack');
+const APP = require('../app.js');
+
+let webpackConfig = {
   mode: 'production',// webpack打包模式
   optimization: {
     minimizer: [
       new TerserJSPlugin({
-        include: /\/src/
+        terserOptions: {
+          compress: {
+            drop_console: typeof APP.drop_console == 'boolean' ? APP.drop_console : true
+          }
+        }
       }),
-      new OptimizeCSSAssetsPlugin({}),
+      new OptimizeCSSAssetsPlugin(),
     ],
     splitChunks: { chunks: "all" }
   },
@@ -19,4 +26,11 @@ module.exports = merge(webpackBase, {
       IS_DEV: 'false'
     })
   ]
-})
+}
+// 是否启动打包分析
+if (process.env.npm_lifecycle_event == 'analys') {
+  webpackConfig.plugins.push(    
+    new BundleAnalyzerPlugin()
+  )
+}
+module.exports = merge(webpackBase, webpackConfig)
