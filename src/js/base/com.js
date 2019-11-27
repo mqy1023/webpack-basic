@@ -1,3 +1,4 @@
+import 'jquery'
 import 'jquery.transit'
 import 'pxloader/PxLoaderImage'
 import { ibase, os } from 'base/base.js'
@@ -577,7 +578,7 @@ function importCom() {
     com.base64_send = function (base64, callback, secretkey) {
         if (base64) {
             secretkey = secretkey || 'test';
-            $.post('https://tool.h5-x.com/cdn/base64', {
+            $.post('/common/cdn/base64', {
                 data: base64,
                 key: secretkey
             }, function (resp) {
@@ -595,7 +596,7 @@ function importCom() {
     com.base64_get = function (link, callback, secretkey) {
         if (link) {
             secretkey = secretkey || 'test';
-            $.post('http://tool.h5-x.com/image/base64', {
+            $.post('/common/image/base64', {
                 link: link,
                 key: secretkey
             }, function (resp) {

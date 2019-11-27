@@ -25,7 +25,7 @@ module.exports = {
       entry: 'pages/screen/screen.js'
     }
   ],
-  // 配置第三方模块为全局变量,配置过后页面中就不需要引入
+  // 配置在你引入第三方库的时候把他设置为全局变量
   expose: [
     {
       module_name: 'jquery',// 模块名
@@ -58,5 +58,13 @@ module.exports = {
   */
   hash: '-[contenthash:4]',
   // production模式下，是否去除console默认为true
-  drop_console: false
+  drop_console: false,
+  // 解决开发环境下api跨域
+  proxy: {
+    '/common': {
+      target: 'http://tool.h5-x.com',
+      changeOrigin: true,
+      pathRewrite: {'^/common' : ''}
+    }
+  }
 }
