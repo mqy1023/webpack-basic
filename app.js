@@ -25,7 +25,7 @@ module.exports = {
       entry: 'pages/screen/screen.js'
     }
   ],
-  // 配置在你引入第三方库的时候把他设置为全局变量
+  // 配置在你引入第三方库的时候把它设置为全局变量
   expose: [
     {
       module_name: 'jquery',// 模块名
