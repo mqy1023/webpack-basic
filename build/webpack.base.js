@@ -17,7 +17,7 @@ let webpackConfig = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
-      chunkFilename: 'css/[id].css'
+      chunkFilename: 'css/common[id].css'
     })
   ],
   resolve: {

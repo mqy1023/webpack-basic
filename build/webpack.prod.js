@@ -19,7 +19,17 @@ let webpackConfig = {
       }),
       new OptimizeCSSAssetsPlugin(),
     ],
-    splitChunks: { chunks: "all" }
+    splitChunks: {
+      chunks: "all",
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      }
+    }
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -29,7 +39,7 @@ let webpackConfig = {
 }
 // 是否启动打包分析
 if (process.env.npm_lifecycle_event == 'analys') {
-  webpackConfig.plugins.push(    
+  webpackConfig.plugins.push(
     new BundleAnalyzerPlugin()
   )
 }
