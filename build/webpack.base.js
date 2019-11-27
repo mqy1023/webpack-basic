@@ -4,6 +4,35 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const APP = require('../app.js');
 const path = require('path');
 const projectPath = path.resolve(__dirname, '../src');
+function costome(babel) {
+  return {
+    visitor: {
+      ExpressionStatement(path) {
+        let expression = path.node.expression
+        if(expression.callee){
+          let object = expression.callee.object;
+          let property = expression.callee.property;
+          if(object && property){
+            if(object.name == '$' || object.name == 'jquery'){
+              if(/(ajax|post|get)/.test(property.name)){
+                let myarguments = expression.arguments
+                if(myarguments[0].type == 'StringLiteral'){
+                  console.log(myarguments[0].value)
+                }else if(myarguments[0].type == 'ObjectExpression'){
+                  myarguments[0].properties.forEach(element => {
+                    if(element.key.name == 'url'){
+                      console.log(element.value.value)
+                    }
+                  });
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+}
 // hash配置
 if (!APP.hash) {
   APP.hash = '-[contenthash:4]'
@@ -67,7 +96,8 @@ let webpackConfig = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-transform-runtime']
+            plugins: ['@babel/plugin-transform-runtime', costome],
+            // plugins: ['@babel/plugin-transform-runtime']
           }
         }
       },

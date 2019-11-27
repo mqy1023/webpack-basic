@@ -93,6 +93,13 @@ $(document).ready(function () {
     console.log('index_handler');
     indexBox.show();
     imonitor.add({ label: '首页' });//添加监测
+
+    icom.base64_get('https://img.zcool.cn/community/010e3959428072a8012193a30452e5.png@1280w_1l_2o_100sh.png',(res)=>{
+      console.log(res)
+      icom.base64_send(res,(res)=>{
+        console.log(res)
+      })
+    })
   }//end func
 
 });//end ready

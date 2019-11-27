@@ -1,3 +1,4 @@
+import 'jquery'
 import '@/css/common.css'
 import { ibase } from 'base/base.js'
 var articleBox = $('article');
