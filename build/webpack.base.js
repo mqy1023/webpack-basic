@@ -4,7 +4,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const APP = require('../app.js');
 const path = require('path');
 const projectPath = path.resolve(__dirname, '../src');
-let hash;
 // hash配置
 if (!APP.hash) {
   APP.hash = '-[contenthash:4]'
