@@ -91,7 +91,9 @@ function importBase() {
 		console.log('ibase debug:' + base.debug);
 		if (this.debug) {
 			import('vconsole').then(({default: VConsole})=>{
-				this.Console = new VConsole();
+				this.Console = new VConsole({
+					defaultPlugins: ['system', 'network', 'element', 'storage']
+				});
 			})
 		}
 		if(this.dir == 'portrait') {

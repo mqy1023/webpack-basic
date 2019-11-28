@@ -11,6 +11,9 @@
 //   this.Console = new VConsole();
 // })
 module.exports = {
+  // outputPath: '/dist', 打包进当前磁盘下的dist目录
+  // outputPath: 'D:/dist', 打包进D盘下的dist目录
+  // outputPath: 'dist', 打包进当前工作目录下的dist 默认
   // 配置页面
   pages: [
     {
@@ -29,9 +32,6 @@ module.exports = {
       entry: 'pages/screen/screen.js'
     }
   ],
-  // outputPath: '/dist', 打包进当前磁盘下的dist目录
-  // outputPath: 'D:/dist', 打包进D盘下的dist目录
-  // outputPath: 'dist', 打包进当前工作目录下的dist 默认
   // 配置在你引入第三方库的时候把它设置为全局变量
   expose: [
     {
