@@ -1,7 +1,4 @@
 module.exports = {
-  // outputPath: '/dist', 打包进当前磁盘下的dist目录
-  // outputPath: 'D:/dist', 打包进D盘下的dist目录
-  // outputPath: 'dist', 打包进当前工作目录下的dist 默认
   pages: [
     {
       name: 'index',

@@ -11,8 +11,12 @@ if (!APP.hash) {
 }else if(APP.hash == 'none'){
   APP.hash = ''
 }
-// 图片管理器
-let APPIMAGE = APP.image || {};
+// 图片资源管理器
+let Assets = Object.assign({
+  limit: 5 * 1024,
+  publicPath: '',
+  outputPath: ''
+},APP.assets || {});
 let webpackConfig = {
   entry: {},
   output: { filename: `js/[name]${APP.hash}.js` },
@@ -29,19 +33,29 @@ let webpackConfig = {
   module: {
     rules: [
       {
-        test: /\.(png|jpg|gif|jpeg)$/,
+        test:/\.(png)|(jpg)|(gif)|(jpeg)$/,
         include: projectPath,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: APPIMAGE.limit || 5 * 1024,
-              outputPath: APPIMAGE.outputPath || 'images',
-              name: `[name]${APP.hash}.[ext]`,
-              publicPath: APPIMAGE.publicPath || ''
-            }
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: Assets.limit,
+            outputPath: Assets.outputPath + 'images',
+            name: `[name]${APP.hash}.[ext]`,
+            publicPath: Assets.publicPath
           }
-        ]
+        }]
+      },
+      {
+        test:/\.(woff)|(WOFF)|(svg)|(SVG)|(eot)|(EOT)|(ttf)|(TTF)$/,
+        include: projectPath,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            outputPath: Assets.outputPath + 'font',
+            name: `[name]${APP.hash}.[ext]`,
+            publicPath: Assets.publicPath
+          }
+        }]
       },
       {
         test: /\.css$/,
@@ -117,6 +131,8 @@ if (process.env.npm_lifecycle_event !== 'server') {
   // 添加domain拼接插件
   babelLoaderPlugin.push(proxyLiteralReplace)
 }
+
+// Babel插件，拼接接口domain
 function proxyLiteralReplace() {
   return {
     visitor: {

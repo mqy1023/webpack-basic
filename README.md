@@ -53,24 +53,25 @@ module.exports = {
 ```
 > 注意: 模块必须在你的 bundle 中被 require() 过，否则他们将不会被暴露。
 
-#### image
- 图片资源管理，这些都是默认配置
+#### assets
+ 资源管理，这些都是默认配置
  
  app.config.js
  
  ``` js
 module.exports = {
   image: {
-    // 超过5KB打包成图片
+    // 不超过5KB的图片转换成base64
     limit: 5 * 1024,
-    // 打包资源输出目录
-    outputPath: 'images',
-    // 打包资源输出路径（用作cdn）默认为空
+    // 构建资源输出目录
+    outputPath: '',
+    // 构建资源输出路径（用作cdn）默认为空
     publicPath: ''
     // publicPath: 'http://localhost:8080/images'
   }
 }
 ```
+
 #### hash
 我们知道，浏览器为了优化体验，会有缓存机制。如果浏览器判断当前资源没有更新，就不会去服务端下载，而是直接使用本地资源。在webpack的构建中，我们通常使用给文件添加后缀值来改名以及提取公共代码到不会改变的lib包中来解决新资源缓存问题。首先我们来介绍一下通过文件名称是怎么工作的。
 [hash介绍](https://www.jianshu.com/p/e609e7b55aa7)
