@@ -1,7 +1,7 @@
 const merge = require('webpack-merge');
 const webpackBase = require('./webpack.base.js');
 const webpack = require('webpack');
-const APP = require('../app.js')
+const APP = require('../app.config.js')
 let webpackConfig = {
   mode: 'development',// webpack打包模式
   devServer: {},

@@ -4,7 +4,7 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
-const APP = require('../app.js');
+const APP = require('../app.config.js');
 
 let webpackConfig = {
   mode: 'production',// webpack打包模式
