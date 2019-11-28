@@ -6,6 +6,10 @@
 * npm run analys：启用打包分析，启动一个可视化的打包数据分析
 * IS_DEV：src目录下的环境变量true为development环境false为production
 */
+// 动态加载示列
+// import('vconsole').then(({default: VConsole})=>{
+//   this.Console = new VConsole();
+// })
 module.exports = {
   // 配置页面
   pages: [
@@ -25,6 +29,9 @@ module.exports = {
       entry: 'pages/screen/screen.js'
     }
   ],
+  // outputPath: '/dist', 打包进当前磁盘下的dist目录
+  // outputPath: 'D:/dist', 打包进D盘下的dist目录
+  // outputPath: 'dist', 打包进当前工作目录下的dist 默认
   // 配置在你引入第三方库的时候把它设置为全局变量
   expose: [
     {

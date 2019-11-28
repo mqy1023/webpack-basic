@@ -90,7 +90,7 @@ function importBase() {
 		this.debug = parseInt(this.getQueryString('debug')) || 0;
 		console.log('ibase debug:' + base.debug);
 		if (this.debug) {
-			base.load('js/base/vConsole.min.js','body',function(){
+			import('vconsole').then(({default: VConsole})=>{
 				this.Console = new VConsole();
 			})
 		}

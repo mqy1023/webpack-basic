@@ -104,6 +104,10 @@ if (typeof APP === 'object') {
     })
   }
 }
+// 设置打包路径
+if (APP.outputPath) {
+  webpackConfig.output.path = path.resolve(APP.outputPath)
+}
 // 是否是打包构建
 if (process.env.npm_lifecycle_event !== 'server') {
   // 需要删除dist目录
