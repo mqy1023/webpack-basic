@@ -11,6 +11,8 @@ if (!APP.hash) {
 }else if(APP.hash == 'none'){
   APP.hash = ''
 }
+// 图片管理器
+let APPIMAGE = APP.image || {};
 let webpackConfig = {
   entry: {},
   output: { filename: `js/[name]${APP.hash}.js` },
@@ -33,10 +35,10 @@ let webpackConfig = {
           {
             loader: 'url-loader',
             options: {
-              limit: APP.image.limit || 5 * 1024,
-              outputPath: APP.image.outputPath || 'images',
+              limit: APPIMAGE.limit || 5 * 1024,
+              outputPath: APPIMAGE.outputPath || 'images',
               name: `[name]${APP.hash}.[ext]`,
-              publicPath: APP.image.publicPath || ''
+              publicPath: APPIMAGE.publicPath || ''
             }
           }
         ]
