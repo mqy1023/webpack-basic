@@ -22,8 +22,8 @@ let webpackConfig = {
     splitChunks: {
       chunks: "all",
       cacheGroups: {
-        styles: {
-          name: 'styles',
+        common: {
+          name: 'common',
           test: /\.css$/,
           chunks: 'all',
           enforce: true,

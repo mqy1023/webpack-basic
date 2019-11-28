@@ -44,8 +44,8 @@ let webpackConfig = {
   output: { filename: `js/[name]${APP.hash}.js` },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css',
-      chunkFilename: 'css/common[id].css'
+      filename: `css/[name]${APP.hash}.css`,
+      chunkFilename: `css/[name]-[id]${APP.hash}.css`
     })
   ],
   resolve: {
