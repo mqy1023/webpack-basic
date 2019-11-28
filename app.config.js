@@ -26,7 +26,6 @@ module.exports = {
       name: ['PxLoader'],// 变量名
     }
   ],
-  hash: '-[contenthash:4]',
   proxy: {
     '/common': {
       target: 'http://tool.h5-x.com',
