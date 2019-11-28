@@ -60,7 +60,7 @@ module.exports = {
  
  ``` js
 module.exports = {
-  image: {
+  assets: {
     // 不超过5KB的图片转换成base64
     limit: 5 * 1024,
     // 构建资源输出目录
@@ -132,8 +132,8 @@ app.config.js
 
  ``` js
 module.exports = {
-  // outputPath: '/dist', 打包进当前磁盘下的dist目录
-  // outputPath: 'D:/dist', 打包进D盘下的dist目录
-  // outputPath: 'dist', 打包进当前工作目录下的dist 默认
+  // outputPath: '/dist', 构建到当前磁盘下的dist目录
+  // outputPath: 'D:/dist', 构建到D盘下的dist目录
+  // outputPath: 'dist', 构建到当前工作目录下的dist 默认
 }
 ```
