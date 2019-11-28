@@ -4,35 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const APP = require('../app.js');
 const path = require('path');
 const projectPath = path.resolve(__dirname, '../src');
-function costome(babel) {
-  return {
-    visitor: {
-      ExpressionStatement(path) {
-        let expression = path.node.expression
-        if(expression.callee){
-          let object = expression.callee.object;
-          let property = expression.callee.property;
-          if(object && property){
-            if(object.name == '$' || object.name == 'jquery'){
-              if(/(ajax|post|get)/.test(property.name)){
-                let myarguments = expression.arguments
-                if(myarguments[0].type == 'StringLiteral'){
-                  console.log(myarguments[0].value)
-                }else if(myarguments[0].type == 'ObjectExpression'){
-                  myarguments[0].properties.forEach(element => {
-                    if(element.key.name == 'url'){
-                      console.log(element.value.value)
-                    }
-                  });
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  };
-}
+let babelLoaderPlugin = ['@babel/plugin-transform-runtime'];
 // hash配置
 if (!APP.hash) {
   APP.hash = '-[contenthash:4]'
@@ -96,8 +68,7 @@ let webpackConfig = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-transform-runtime', costome],
-            // plugins: ['@babel/plugin-transform-runtime']
+            plugins: babelLoaderPlugin,
           }
         }
       },
@@ -133,8 +104,33 @@ if (typeof APP === 'object') {
     })
   }
 }
-// 是否需要删除dist目录
+// 是否是打包构建
 if (process.env.npm_lifecycle_event !== 'server') {
-  webpackConfig.plugins.push(new CleanWebpackPlugin({}))
+  // 需要删除dist目录
+  webpackConfig.plugins.push(new CleanWebpackPlugin({}));
+  // 添加domain拼接插件
+  babelLoaderPlugin.push(proxyLiteralReplace)
+}
+function proxyLiteralReplace() {
+  return {
+    visitor: {
+      Literal(path) {
+        if (path.node.value) {
+          for (const key in APP.proxy) {
+            let proxy = APP.proxy[key];
+            if (new RegExp(`^${key}`).test(path.node.value)) {
+              if (proxy.pathRewrite instanceof Object) {
+                for (const expression in proxy.pathRewrite) {
+                  let pattern = new RegExp(`^${expression}`);
+                  path.node.value = path.node.value.replace(pattern, proxy.pathRewrite[expression]);
+                }
+              }
+              path.node.value = (proxy.prod ? proxy.prod : proxy.target) + path.node.value
+            }
+          }
+        }
+      }
+    }
+  };
 }
 module.exports = webpackConfig

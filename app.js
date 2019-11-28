@@ -59,11 +59,17 @@ module.exports = {
   hash: '-[contenthash:4]',
   // production模式下，是否去除console默认为true
   drop_console: false,
-  // 解决开发环境下api跨域
+  // 解决开发环境下api跨域 打包的时候会把domain自动加在接口前面
+  // 因为调用接口的方式太多，所以在打包的时候以/common开头的字符串都会被规则匹配到
   proxy: {
     '/common': {
+      // 指定开发环境代理domain
       target: 'http://tool.h5-x.com',
+      // production模式下优先使用prod，prod没有值使用target
+      prod: 'http://tool.h5-x.com',
+      // 开发环境是否跨域
       changeOrigin: true,
+      // 重写路径
       pathRewrite: {'^/common' : ''}
     }
   }
