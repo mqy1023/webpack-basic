@@ -185,12 +185,12 @@ aside {
             height: 30px;
 
             &:nth-child(1) {
-              background-image: url(../../images//turn_unlock.png);
+              background-image: url(../../images/turn_unlock.png);
               animation: turnLock1 3.2s linear infinite both;
             }
 
             &:nth-child(2) {
-              background-image: url(../../images//turn_lock.png);
+              background-image: url(../../images/turn_lock.png);
               animation: turnLock2 3.2s linear infinite both;
             }
           }
@@ -242,13 +242,13 @@ aside {
             height: 22.5px;
 
             &.yes {
-              background-image: url(../../images//turn_yes.png);
+              background-image: url(../../images/turn_yes.png);
               opacity: 0;
               animation: turnYes 3.2s linear infinite both;
             }
 
             &.no {
-              background-image: url(../../images//turn_no.png);
+              background-image: url(../../images/turn_no.png);
               opacity: 0;
               animation: turnNo 3.2s linear infinite both;
             }
@@ -452,7 +452,7 @@ aside {
         top: 40px;
         width: 60px;
         height: 60px;
-        background-image: url(../../images//close_video.png);
+        background-image: url(../../images/close_video.png);
       }
     }
   }
@@ -800,11 +800,11 @@ a {
   }
 
   &.bgmPlay {
-    background-image: url(../../images//bgm_on.png);
+    background-image: url(../../images/bgm_on.png);
   }
 
   &.bgmStop {
-    background-image: url(../../images//bgm_off.png);
+    background-image: url(../../images/bgm_off.png);
   }
 }
 

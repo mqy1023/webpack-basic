@@ -18,7 +18,7 @@ function importAudio(){
 			console.log(this.webAudio?'web audio mode':'local audio mode');
 			for(var i=0; i<list.length; i++){
 				var defaults = {src:'',volume:1,loop:0,autoplay:0,continuePlay:0,currentTime:0};
-				var opts = $.extend(defaults,list[i]);
+				var opts = Object.assign(defaults,list[i]);
 				if(opts.src!=''){
 					var str1=opts.src.split('/');
 					var name=str1[str1.length-1].split('.')[0];
@@ -255,7 +255,7 @@ function importAudio(){
 	
 	audio.bgm=function(options){
 		var defaults = {src:'',btn:$('a.bgmBtn'),playClassName:'bgmPlay',stopClassName:'bgmStop',webAudio:false,autoplay:true};
-		var opts = $.extend(defaults,options);
+		var opts = Object.assign(defaults,options);
 		console.log(opts.webAudio?'bgm is at web audio mode':'bgm is at local audio mode');
 		if(opts.webAudio) var bgm=new webAudioBgm(opts);
 		else var bgm=new localAudioBgm(opts);
@@ -450,24 +450,11 @@ function importBgm(){
 	var opts={};
 	
 	bgm.init=function(options){
-		opts = $.extend(defaults,options);
+		opts = Object.assign(defaults,options);
 		if(opts.src!=''){
-			creatNode('a',null,'bgmBtn',null,document.querySelector('article'));
-			bgm.audio=iaudio.bgm({src:opts.src,onLoaded:opts.onLoaded,webAudio:opts.webAudio,autoplay:opts.autoplay});
-			this.btn=$('a.bgmBtn');
+			this.btn = $('<a class="bgmBtn"></a>').appendTo($('article'));
+			bgm.audio=iaudio.bgm({src:opts.src,onLoaded:opts.onLoaded,webAudio:opts.webAudio,autoplay:opts.autoplay,btn: this.btn});
 		}//edn if
-		let creatNode = function(nodeName, idName, className, innerHTML, wrapNode) {
-			nodeName = nodeName || 'div';
-			className = className || '';
-			idName = idName || '';
-			innerHTML = innerHTML || '';
-			wrapNode = wrapNode || document.querySelector('body');
-			var newNode = document.createElement(nodeName);
-			if(className != '') newNode.className = className;
-			if(idName != '') newNode.id = idName;
-			if(innerHTML != '') newNode.innerHTML = innerHTML;
-			wrapNode.appendChild(newNode);
-		} //end func
 	}//edn func
 	
 	bgm.href=function(url){
