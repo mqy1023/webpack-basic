@@ -2,13 +2,13 @@
 // 默认模板
 import { icom, ibase, imath, ishare } from '@/common/js/base' // 在com.js中暴露所有模块，打包的时候未使用到的模块会自动去除
 import './index.scss'
-
 ibase.init({ dir: 'portrait', lock: true });
+
 $(function () {
 	//-----------------------------------------定义和初始化变量----------------------------------------
 	let articleBox = $('article');
 	let unableView = 'https://wx.qlogo.cn/mmopen/vi_32/l1R1ORryeZaAU5pwF4iavDQc04aGPC6FdJOiccHHzTbyDBIjGDJjicib1sVOXgYLjkjt3NTks92TMybeGvPgw1mjPA/132';
-	var UserInfo;
+	let UserInfo;
 	//----------------------------------------页面初始化----------------------------------------
 	icom.screenScrollUnable();//如果是一屏高度项目且在ios下，阻止屏幕默认滑动行为
 	articleBox.fadeTo("slow", 1);// 显示页面

@@ -7,7 +7,7 @@ $(function () {
 	//-----------------------------------------定义和初始化变量----------------------------------------
 	let articleBox = $('article');
 	let unableView = 'https://wx.qlogo.cn/mmopen/vi_32/l1R1ORryeZaAU5pwF4iavDQc04aGPC6FdJOiccHHzTbyDBIjGDJjicib1sVOXgYLjkjt3NTks92TMybeGvPgw1mjPA/132';
-	var UserInfo;
+	let UserInfo;
 	//----------------------------------------页面初始化----------------------------------------
 	icom.screenScrollUnable();//如果是一屏高度项目且在ios下，阻止屏幕默认滑动行为
 	articleBox.fadeTo("slow", 1);// 显示页面
