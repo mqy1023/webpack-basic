@@ -1,6 +1,6 @@
 
 // 默认模板
-import { icom, ibase, imath, ishare } from '@/common/js/base' // 在com.js中暴露所有模块，打包的时候未使用到的模块会自动去除
+import { icom, ibase, imath, ishare, imonitor } from '@/common/js/base' // 在com.js中暴露所有模块，打包的时候未使用到的模块会自动去除
 import './index.scss'
 ibase.init({ dir: 'portrait', lock: true });
 
