@@ -452,10 +452,22 @@ function importBgm(){
 	bgm.init=function(options){
 		opts = $.extend(defaults,options);
 		if(opts.src!=''){
-			ibase.creatNode('a',null,'bgmBtn',null,document.querySelector('article'));
+			creatNode('a',null,'bgmBtn',null,document.querySelector('article'));
 			bgm.audio=iaudio.bgm({src:opts.src,onLoaded:opts.onLoaded,webAudio:opts.webAudio,autoplay:opts.autoplay});
 			this.btn=$('a.bgmBtn');
 		}//edn if
+		let creatNode = function(nodeName, idName, className, innerHTML, wrapNode) {
+			nodeName = nodeName || 'div';
+			className = className || '';
+			idName = idName || '';
+			innerHTML = innerHTML || '';
+			wrapNode = wrapNode || document.querySelector('body');
+			var newNode = document.createElement(nodeName);
+			if(className != '') newNode.className = className;
+			if(idName != '') newNode.id = idName;
+			if(innerHTML != '') newNode.innerHTML = innerHTML;
+			wrapNode.appendChild(newNode);
+		} //end func
 	}//edn func
 	
 	bgm.href=function(url){

@@ -1,0 +1,859 @@
+/* ---------------------------------------- css base 基础部分---------------------------------------- */
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  word-break: break-word;
+  font-family: 'Microsoft YaHei',arial;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-size: 24px;
+  line-height: 1;
+  box-sizing: border-box;
+  position: relative;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th, tr, td, h1, h2, h3, h4, h5, h6, i, b, em {
+  font-style: normal;
+  font-weight: normal;
+}
+
+ol, ul, li {
+  list-style-type: none;
+  display: block;
+}
+
+select, input, img {
+  vertical-align: middle;
+  border: none;
+  outline: none;
+}
+
+textarea {
+  resize: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+/*webkit核心中textare取消拖动调整大小*/
+/*textarea聚焦时默认边框颜色不变*/
+
+select {
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  font-family: arial;
+}
+
+input {
+  &[type=text], &[type=tel], &[type=password], &[type=number] {
+    -webkit-appearance: none;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    font-family: arial;
+  }
+}
+
+textarea {
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  font-family: arial;
+}
+
+input {
+  &::-webkit-input-placeholder, &:focus::-webkit-input-placeholder {
+    color: #888;
+  }
+}
+
+/* input 标签placeholder文字的颜色*/
+
+video {
+  background-color: #000;
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+}
+
+sup, sub {
+  font-size: 60%;
+}
+
+.clearFix {
+  display: block;
+
+  &:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+  }
+}
+
+.noPointer {
+  pointer-events: none;
+}
+
+/* 禁止触摸互动事件 */
+
+.noCallout {
+  -webkit-touch-callout: none;
+}
+
+/* 禁止ios 长按时不触发系统的菜单，禁止ios&android长按时下载图片 */
+
+.noSelect {
+  -webkit-user-select: none;
+}
+
+/* 禁止ios和android用户选中文字 */
+
+.gpuOpen {
+  will-change: transform,opacity;
+}
+
+.gpuClose {
+  will-change: auto;
+}
+
+.txtOutline {
+  text-shadow: 1px 0 0 #000,-1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000;
+}
+
+.txtOverflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------- css common 公共部分 ---------------------------------------- */
+
+/* 竖屏锁定提示浮层 */
+
+aside {
+  &.turnBoxLandscape {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 1);
+    z-index: 10999;
+    display: none;
+
+    > {
+      div {
+        &.lock {
+          margin: 50px auto 0;
+          width: 50px;
+          height: 50px;
+          background-color: #fff;
+          border-radius: 15px;
+          position: relative;
+          animation: turnLock 3.2s linear infinite both;
+
+          span {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            width: 30px;
+            height: 30px;
+
+            &:nth-child(1) {
+              background-image: url(../../images//turn_unlock.png);
+              animation: turnLock1 3.2s linear infinite both;
+            }
+
+            &:nth-child(2) {
+              background-image: url(../../images//turn_lock.png);
+              animation: turnLock2 3.2s linear infinite both;
+            }
+          }
+        }
+
+        &.sign {
+          margin-top: 10px;
+          width: 100%;
+          height: 16px;
+          position: relative;
+
+          span {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            color: #fff;
+
+            &:nth-child(1) {
+              animation: turnSign1 3.2s linear infinite both;
+            }
+
+            &:nth-child(2) {
+              animation: turnSign2 3.2s linear infinite both;
+            }
+          }
+        }
+
+        &.phone {
+          width: 60px;
+          height: 120px;
+          margin: -10px auto 0;
+          position: relative;
+          transform: rotate(-90deg);
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+
+          i {
+            position: absolute;
+            left: 50%;
+            top: 48px;
+            width: 30px;
+            margin-left: -15px;
+            height: 22.5px;
+
+            &.yes {
+              background-image: url(../../images//turn_yes.png);
+              opacity: 0;
+              animation: turnYes 3.2s linear infinite both;
+            }
+
+            &.no {
+              background-image: url(../../images//turn_no.png);
+              opacity: 0;
+              animation: turnNo 3.2s linear infinite both;
+            }
+          }
+        }
+      }
+
+      p {
+        text-align: center;
+        font-size: 24px;
+        color: rgba(255, 255, 255, 0.65);
+        margin-top: 10px;
+      }
+    }
+  }
+
+  &.loadBox {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 996;
+    display: none;
+
+    > {
+      span {
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -10px;
+        margin-top: -20px;
+        -webkit-transform: scale(0.4);
+        -webkit-transform-origin: 50% 50%;
+
+        i {
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 40px;
+          height: 10px;
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.5);
+          box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+
+          &:nth-child(1) {
+            -webkit-transform: translate(60px, 0) rotate(0deg);
+            -webkit-animation: loadCircle 2.4s 0s linear infinite;
+          }
+
+          &:nth-child(2) {
+            -webkit-transform: translate(51.96px, 30px) rotate(30deg);
+            -webkit-animation: loadCircle 2.4s 0.2s linear infinite;
+          }
+
+          &:nth-child(3) {
+            -webkit-transform: translate(30px, 51.96px) rotate(60deg);
+            -webkit-animation: loadCircle 2.4s 0.4s linear infinite;
+          }
+
+          &:nth-child(4) {
+            -webkit-transform: translate(0, 60px) rotate(90deg);
+            -webkit-animation: loadCircle 2.4s 0.6s linear infinite;
+          }
+
+          &:nth-child(5) {
+            -webkit-transform: translate(-30px, 51.96px) rotate(120deg);
+            -webkit-animation: loadCircle 2.4s 0.8s linear infinite;
+          }
+
+          &:nth-child(6) {
+            -webkit-transform: translate(-51.96px, 30px) rotate(150deg);
+            -webkit-animation: loadCircle 2.4s 1.0s linear infinite;
+          }
+
+          &:nth-child(7) {
+            -webkit-transform: translate(-60px, 0) rotate(180deg);
+            -webkit-animation: loadCircle 2.4s 1.2s linear infinite;
+          }
+
+          &:nth-child(8) {
+            -webkit-transform: translate(-51.96px, -30px) rotate(210deg);
+            -webkit-animation: loadCircle 2.4s 1.4s linear infinite;
+          }
+
+          &:nth-child(9) {
+            -webkit-transform: translate(-30px, -51.96px) rotate(240deg);
+            -webkit-animation: loadCircle 2.4s 1.6s linear infinite;
+          }
+
+          &:nth-child(10) {
+            -webkit-transform: translate(0, -60px) rotate(270deg);
+            -webkit-animation: loadCircle 2.4s 1.8s linear infinite;
+          }
+
+          &:nth-child(11) {
+            -webkit-transform: translate(30px, -51.96px) rotate(300deg);
+            -webkit-animation: loadCircle 2.4s 2.0s linear infinite;
+          }
+
+          &:nth-child(12) {
+            -webkit-transform: translate(51.96px, -30px) rotate(330deg);
+            -webkit-animation: loadCircle 2.4s 2.2s linear infinite;
+          }
+        }
+      }
+
+      b {
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        margin-left: -10px;
+        margin-top: -34px;
+        text-align: center;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+
+  &.alertBox {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 998;
+
+    > div {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 60%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      background-color: #FAFAFC;
+      border-radius: 6px;
+      padding-top: 40px;
+      text-align: center;
+
+      > p {
+        &.text {
+          font-size: 30px;
+          line-height: 40px;
+          color: #888;
+          padding: 0 40px;
+        }
+
+        &.btn {
+          display: flex;
+          border-top: 1px solid #D5D5D6;
+          margin-top: 40px;
+          position: relative;
+
+          a {
+            -webkit-flex: 1;
+            flex: 1;
+            text-align: center;
+            color: #0BB20C;
+            font-size: 34px;
+            line-height: 84px;
+
+            &:active {
+              background-color: #eeeeee;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.videoBox {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 996;
+    display: none;
+
+    > {
+      iframe, video {
+        position: absolute;
+        left: 0;
+        top: 0;
+        object-fit: fill;
+      }
+
+      a.close {
+        position: absolute;
+        right: 40px;
+        top: 40px;
+        width: 60px;
+        height: 60px;
+        background-image: url(../../images//close_video.png);
+      }
+    }
+  }
+}
+
+@-webkit-keyframes turnLock {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.2);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  90% {
+    transform: scale(1);
+  }
+
+  95% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@-webkit-keyframes turnLock1 {
+  0% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+
+  40% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+
+  45% {
+    transform: rotate(0);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: rotate(0);
+    opacity: 0;
+  }
+
+  90% {
+    transform: rotate(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotate(360deg);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes turnLock2 {
+  0% {
+    transform: rotate(0);
+    opacity: 0;
+  }
+
+  40% {
+    transform: rotate(0);
+    opacity: 0;
+  }
+
+  45% {
+    transform: rotate(0);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+
+  53% {
+    transform: rotate(-8deg);
+    opacity: 1;
+  }
+
+  56% {
+    transform: rotate(6deg);
+    opacity: 1;
+  }
+
+  59% {
+    transform: rotate(-4deg);
+    opacity: 1;
+  }
+
+  62% {
+    transform: rotate(4deg);
+    opacity: 1;
+  }
+
+  65% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+
+  90% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes turnSign1 {
+  0% {
+    opacity: 1;
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  90% {
+    opacity: 0;
+  }
+
+  95% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes turnSign2 {
+  0% {
+    opacity: 0;
+  }
+
+  45% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  95% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes turnYes {
+  0% {
+    transform: scale(0) rotate(90deg);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(0) rotate(90deg);
+    opacity: 0;
+  }
+
+  54% {
+    transform: scale(1.15) rotate(90deg);
+    opacity: 1;
+  }
+
+  58% {
+    transform: scale(0.85) rotate(90deg);
+    opacity: 1;
+  }
+
+  62% {
+    transform: scale(1) rotate(90deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: scale(1) rotate(90deg);
+    opacity: 1;
+  }
+
+  85% {
+    transform: scale(0) rotate(90deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(0) rotate(90deg);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes turnNo {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  4% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+
+  8% {
+    transform: scale(0.85);
+    opacity: 1;
+  }
+
+  12% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  30% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  35% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+/* load浮层 */
+
+@-webkit-keyframes loadCircle {
+  0% {
+    opacity: 1;
+  }
+
+  8% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* 取代系统alert的警告提示弹窗 */
+
+/* 视频 */
+
+/* 照片文件选择框*/
+
+#fileBox {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+/* 电子罗盘数据面板 */
+
+#compassPanel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  display: none;
+
+  h3 {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+
+  p {
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+  }
+}
+
+/* 分享浮层 */
+
+aside.shareBox {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 997;
+  display: none;
+
+  > img {
+    width: 100%;
+  }
+}
+
+/* 背景音乐按钮 */
+
+a {
+  &.bgmBtn {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 60px;
+    height: 60px;
+  }
+
+  &.bgmPlay {
+    background-image: url(../../images//bgm_on.png);
+  }
+
+  &.bgmStop {
+    background-image: url(../../images//bgm_off.png);
+  }
+}
+
+/* fps */
+
+#fpsShow {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 90px;
+  height: 36px;
+  font-size: 24px;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.fpsFast {
+  color: greenyellow;
+}
+
+.fpsNormal {
+  color: yellow;
+}
+
+.fpsSlow {
+  color: red;
+}
+
+/* 容器 */
+
+body {
+  background-color: #000;
+}
+
+article {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  transform-origin: 0 0;
+}
+
+section, aside {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}

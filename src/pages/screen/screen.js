@@ -1,6 +1,6 @@
 import 'jquery'
-import '@/css/common.css'
-import { ibase } from 'base/base.js'
+import '@/common/css/common.scss'
+import { ibase } from '@/common/js/base'
 var articleBox = $('article');
 articleBox.fadeTo("slow", 1);// 显示页面
 window.addEventListener('resize', window_orientationchange, false);

@@ -1,3 +1,4 @@
+@import '@/common/css/common.scss';
 html{
   body{
     article {
@@ -9,5 +10,5 @@ html{
 
 @font-face {
   font-family: SketchRockwell; /*这里是说明调用来的字体名字*/
-  src: url(../../font/FZXBSJW.TTF); 
+  src: url(../../common/font/FZXBSJW.TTF); 
 }
