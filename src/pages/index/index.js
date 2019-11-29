@@ -11,6 +11,7 @@ $(function () {
 	let UserInfo;
 	//----------------------------------------页面初始化----------------------------------------
 	icom.screenScrollUnable();//如果是一屏高度项目且在ios下，阻止屏幕默认滑动行为
+	icom.adaptation('cover');
 	articleBox.fadeTo("slow", 1);// 显示页面
 
 	if (window.Data) {
