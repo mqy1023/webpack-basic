@@ -72,9 +72,9 @@ function importBase() {
 		window.addEventListener("resize", function () { font_resize(); setFrameout(font_resize, 10); }, false);
 		// 锁定提示
 		if (this.dir == 'portrait') {
-			// document.write(`<aside class="turnBoxPortrait" id="turnBox"><div class="phone"><img src="${require('@/images/turn_phone.png')}"><i class="yes"></i><i class="no"></i></div><p>竖屏体验更佳</p></aside>`);
+			document.write(`<aside class="turnBoxPortrait" id="turnBox"><div class="phone"><img src="${require('@/images/turn_phone.png')}"><i class="yes"></i><i class="no"></i></div><p>竖屏体验更佳</p></aside>`);
 		} else {
-			// document.write(`<aside class="turnBoxLandscape" id="turnBox"><div class="lock"><span></span><span></span></div><div class="sign"><span>竖排方向锁定：关闭</span><span>竖排方向锁定：打开</span></div><div class="phone"><img src="${require('@/images/turn_phone.png')}"><i class="yes"></i><i class="no"></i></div><p>锁定竖屏体验更佳</p></aside>`);
+			document.write(`<aside class="turnBoxLandscape" id="turnBox"><div class="lock"><span></span><span></span></div><div class="sign"><span>竖排方向锁定：关闭</span><span>竖排方向锁定：打开</span></div><div class="phone"><img src="${require('@/images/turn_phone.png')}"><i class="yes"></i><i class="no"></i></div><p>锁定竖屏体验更佳</p></aside>`);
 		}
 		this.turnBox = document.getElementById("turnBox");
 		if (this.screenLock && (this.getOrient(true) == 'landscape')) {
