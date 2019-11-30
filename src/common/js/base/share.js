@@ -6,7 +6,28 @@ function importShare() {
   share.wxSigned = false;
   share.tbSigned = false;
   share.tbLoaded = 0;
-
+  //-------------------------------------------------------自定义分享内容
+  share.init = function (Id = { wxId: 'wx1c1f89b6f490b8e7', tbId: '' }, content) {
+    share.wxId = Id.wxId;//微信 appid
+    share.tbId = Id.tbId;//手淘 appid
+    let hrefs = window.location.href.split('?');
+    share.url = hrefs[0].substr(0, hrefs[0].lastIndexOf('/') + 1);
+    share.content = Object.assign({
+      link: share.url,
+      image: share.url + 'images/share.jpg?v=' + Math.random(),
+      title: '分享标题',
+      friend: '发送给朋友的分享文案',
+      timeline: '发送到给朋友圈的分享文案',
+      weibo: '发送到微博的分享文案'
+    }, content);
+    console.log(share.content);
+    if (os.weixin) {
+      share.from = ibase.getQueryString('from');
+      share.from = share.from || 'friend';
+      share.from = share.from == 'groupmessage' || share.from == 'singlemessage' ? 'friend' : share.from;
+      share.wxSign();
+    }
+  }
   //-------------------------------------------------------微信SDK验证
   share.wxSign = function () {
     $.get("http://scrm.h5-x.com/api/jssdk/sign", { appid: share.wxId, url: location.href }, function (data) {
@@ -245,27 +266,4 @@ function importShare() {
 }
 
 let ishare = importShare()
-//-------------------------------------------------------自定义分享内容
-ishare.wxId = 'wx1c1f89b6f490b8e7';//微信 appid
-ishare.tbId = '';//手淘 appid
-var hrefs = window.location.href.split('?');
-ishare.url = hrefs[0].substr(0, hrefs[0].lastIndexOf('/') + 1);
-ishare.content = {
-  link: ishare.url,
-  image: ishare.url + 'images/share.jpg?v=' + Math.random(),
-  title: $('title').html(),
-  friend: '发送给朋友的分享文案',
-  timeline: '发送到给朋友圈的分享文案',
-  weibo: '发送到微博的分享文案'
-};
-console.log(ishare.content);
-if (os.weixin) {
-  ishare.from = ibase.getQueryString('from');
-  ishare.from = ishare.from || 'friend';
-  ishare.from = ishare.from == 'groupmessage' || ishare.from == 'singlemessage' ? 'friend' : ishare.from;
-  console.log('微信分享来源：' + ishare.from);
-  ishare.wxSign();
-}
-//-------------------------------------------------------自定义分享内容
-
 export default ishare

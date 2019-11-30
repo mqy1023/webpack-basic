@@ -1,15 +1,16 @@
 // 横屏模板
-import { icom, ibase, imonitor, imath, ishare } from '@/common/js/base' // 在com.js中暴露所有模块，打包的时候未使用到的模块会自动去除
+import { ibase, imonitor, ishare } from '@/common/js/base'
+import { screenScrollUnable } from '@/common/js/base/com.js'
 import './landscape.scss'
 ibase.init({ dir: 'landscape', lock: true });
-
+ishare.init();
 $(function () {
 	//-----------------------------------------定义和初始化变量----------------------------------------
 	let articleBox = $('article');
 	let unableView = 'https://wx.qlogo.cn/mmopen/vi_32/l1R1ORryeZaAU5pwF4iavDQc04aGPC6FdJOiccHHzTbyDBIjGDJjicib1sVOXgYLjkjt3NTks92TMybeGvPgw1mjPA/132';
 	let UserInfo;
 	//----------------------------------------页面初始化----------------------------------------
-	icom.screenScrollUnable();//如果是一屏高度项目且在ios下，阻止屏幕默认滑动行为
+	screenScrollUnable();//如果是一屏高度项目且在ios下，阻止屏幕默认滑动行为
 	articleBox.fadeTo("slow", 1);// 显示页面
 
 	if (window.Data) {
@@ -57,7 +58,7 @@ $(function () {
 	//模拟加载进度
 	function load_timer(per) {
 		per = per || 0;
-		per += imath.randomRange(1, 3);
+		per += 1;
 		per = per > 100 ? 100 : per;
 		load_set(per);
 		if (per == 100) setTimeout(init_handler, 200);

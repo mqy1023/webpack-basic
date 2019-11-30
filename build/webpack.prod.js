@@ -3,6 +3,7 @@ const webpackBase = require('./webpack.base.js')
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const WebpackDeepScopeAnalysisPlugin = require('webpack-deep-scope-plugin').default;
 const webpack = require('webpack');
 const APP = require('../app.config.js');
 
@@ -34,36 +35,9 @@ let webpackConfig = {
   plugins: [
     new webpack.DefinePlugin({
       IS_DEV: 'false'
-    })
+    }),
+    new WebpackDeepScopeAnalysisPlugin()
   ]
-}
-
-function proxyLiteralReplace() {
-  return {
-    visitor: {
-      Literal(path) {
-        if (path.node.value) {
-          for (const key in APP.proxy) {
-            let proxy = APP.proxy[key];
-            let pattern = new RegExp(`^${key}`);
-            if (pattern.test(path.node.value)) {
-              if (proxy.pathRewrite instanceof Object) {
-                for (const key in proxy.pathRewrite) {
-                  let pattern = new RegExp(`^${key}`);
-                  path.node.value = path.node.value.replace(pattern, proxy.pathRewrite[key]);
-                }
-              }
-              if (proxy.prod) {
-                path.node.value += proxy.prod
-              } else {
-                path.node.value += proxy.target
-              }
-            }
-          }
-        }
-      }
-    }
-  };
 }
 // 是否启动打包分析
 if (process.env.npm_lifecycle_event == 'analys') {

@@ -8,7 +8,7 @@ let babelLoaderPlugin = ['@babel/plugin-transform-runtime'];
 // hash配置
 if (!APP.hash) {
   APP.hash = '-[contenthash:4]'
-}else if(APP.hash == 'none'){
+} else if (APP.hash == 'none') {
   APP.hash = ''
 }
 // 图片资源管理器
@@ -16,7 +16,7 @@ let Assets = Object.assign({
   limit: 5 * 1024,
   publicPath: '',
   outputPath: ''
-},APP.assets || {});
+}, APP.assets || {});
 let webpackConfig = {
   entry: {},
   output: { filename: `js/[name]${APP.hash}.js` },
@@ -33,7 +33,7 @@ let webpackConfig = {
   module: {
     rules: [
       {
-        test:/\.(png)|(jpg)|(gif)|(jpeg)$/,
+        test: /\.(png)|(jpg)|(gif)|(jpeg)$/,
         include: projectPath,
         use: [{
           loader: 'url-loader',
@@ -46,7 +46,7 @@ let webpackConfig = {
         }]
       },
       {
-        test:/\.(woff)|(WOFF)|(svg)|(SVG)|(eot)|(EOT)|(ttf)|(TTF)$/,
+        test: /\.(woff)|(WOFF)|(svg)|(SVG)|(eot)|(EOT)|(ttf)|(TTF)$/,
         include: projectPath,
         use: [{
           loader: 'file-loader',
@@ -83,7 +83,7 @@ let webpackConfig = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
+            presets: [['@babel/preset-env', { modules: false }]],
             plugins: babelLoaderPlugin,
           }
         }

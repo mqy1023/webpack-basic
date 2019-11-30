@@ -1,6 +1,5 @@
 import 'jquery'
 import '@/common/css/common.scss'
-import { ibase } from '@/common/js/base'
 var articleBox = $('article');
 articleBox.fadeTo("slow", 1);// 显示页面
 window.addEventListener('resize', window_orientationchange, false);
@@ -13,7 +12,6 @@ if (window.history.length == 2) {
 }//edn if
 
 function window_orientationchange(event) {
-  var dir = ibase.getOrient();
   document.getElementById('screenWidth').innerHTML = screen.width;
   document.getElementById('screenHeight').innerHTML = screen.height;
   document.getElementById('innerWidth').innerHTML = document.documentElement.clientWidth;
