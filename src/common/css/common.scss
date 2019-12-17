@@ -686,38 +686,15 @@ article {
   height: 100%;
   overflow-x: hidden;
   transform-origin: 0 0;
-  opacity: 0;
+  section, aside {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
-
-section, aside {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
 /* 出血容器 */
-
-// .articleBleed {
-//   position: absolute;
-//   left: 50%;
-//   top: 0;
-//   width: 9.36rem;
-//   margin-left: -4.68rem;
-//   height: 12.18rem;
-//   transform-origin: 50% 0;
-
-//   > section {
-//     position: absolute;
-//     left: 50%;
-//     top: 0;
-//     width: 6.29rem;
-//     margin-left: -3.145rem;
-//     height: 100%;
-//   }
-// }
-
 .articleBleed {
   position: absolute;
   left: 50%;
@@ -727,14 +704,4 @@ section, aside {
   margin-top: -7.32rem;
   height: 14.64rem;
   transform-origin: 50% 50%;
-
-  > section {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 7.5rem;
-    margin-left: -3.75rem;
-    margin-top: -6.09rem;
-    height: 12.18rem;
-  }
 }

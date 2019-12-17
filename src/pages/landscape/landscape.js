@@ -1,6 +1,6 @@
 // 横屏模板
-import { ibase, imonitor, ishare } from '@/common/js/base'
-import { screenScrollUnable } from '@/common/js/base/com.js'
+import { ibase, imonitor, ishare, PxLoader } from '@/common/js'
+import { screenScrollUnable } from '@/common/js/com.js'
 import './landscape.scss'
 ibase.init({ dir: 'landscape', lock: true });
 ishare.init();

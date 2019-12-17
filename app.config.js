@@ -20,12 +20,11 @@ module.exports = {
     {
       module_name: 'jquery',// 模块名
       name: ['jquery', '$'],// 变量名
-    },
-    {
-      module_name: 'PxLoader',// 模块名
-      name: ['PxLoader'],// 变量名
     }
   ],
+  assets:{
+    limit: false
+  },
   proxy: {
     '/common': {
       target: 'http://tool.h5-x.com',

@@ -1,5 +1,6 @@
 import 'jquery'
 import 'jquery.transit'
+import PxLoader from 'pxloader'
 import 'pxloader/PxLoaderImage'
 import { iaudio, ibgm } from './audio.js'
 import { ibase, os } from './base.js'
@@ -11,5 +12,6 @@ export {
   ibase,
   os,
   imonitor,
-  ishare
+  ishare,
+  PxLoader
 }
