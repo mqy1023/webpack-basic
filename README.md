@@ -1,5 +1,5 @@
 ### webpack-basic开发文档
-[掘金链接](https://juejin.im/post/5ddf71285188256eb8512e1e)
+[简书链接](https://www.jianshu.com/p/dc33902ba7e4)
 #### 指令
 * `npm run server` 启动开发环境服务器
 * `npm run dev` 启动development环境构建（代码未压缩, 未做代码分离（提取复用模块），保留source-map）
